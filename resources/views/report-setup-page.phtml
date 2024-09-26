@@ -54,22 +54,33 @@ use Fisharebest\Webtrees\I18N;
         </div>
 
         <div class="col-sm-9 wt-page-options-value d-flex justify-content-around">
-            <div class="text-center">
-                <label for="HTML" title="HTML">
+            <?php if ($title !== '后代图') : ?>
+			<div class="text-center">
+                <label for="HTML" title="Show <?= $description ?> by HTML">
                     <?= view('icons/mime', ['type' => 'text/html']) ?>
                     <span class="visually-hidden">HTML</span>
                 </label>
                 <br>
                 <input type="radio" name="format" id="HTML" value="HTML" <?= $format === 'HTML' ? 'checked' : '' ?>>
             </div>
-            <div class="text-center">
-                <label for="PDF" title="PDF">
+			<div class="text-center">
+                <label for="PDF" title="Show <?= $description ?> by PDF">
                     <?= view('icons/mime', ['type' => 'application/pdf']) ?>
                     <span class="visually-hidden">PDF</span>
                 </label>
                 <br>
                 <input type="radio" name="format" value="PDF" id="PDF" <?= $format === 'PDF' ? 'checked' : '' ?>>
             </div>
+			<?php else : ?>
+            <div class="text-center">
+                <label for="PDF" title="用PDF显示 <?= $description ?> ">
+                    <?= view('icons/mime', ['type' => 'application/pdf']) ?>
+                    <span class="visually-hidden">PDF</span>
+                </label>
+                <br>
+                <input type="radio" name="format" value="PDF" id="PDF" <?= $format === 'PDF' ? 'checked' : '' ?>>
+            </div>
+			<?php endif ?>
         </div>
     </div>
 

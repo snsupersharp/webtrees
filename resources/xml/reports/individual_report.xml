@@ -11,7 +11,13 @@
 	<!--
 	<Input name="fonts" type="select" default="dejavusans" options="arialunicid0=>I18N::translateContext('font name', 'Arial')|dejavusans=>I18N::translateContext('font name', 'DejaVu')|helvetica=>I18N::translateContext('font name', 'Helvetica')"><var var="I18N::translate('Font')"/></Input>
 	-->
-	<SetVar name="fonts" value="dejavusans" />
+	<!-- <Input name="fonts" type="select" default="dejavusans" options="arialunicid0=>I18N::translateContext('font name', 'Arial')|dejavusans=>I18N::translateContext('font name', 'DejaVu')|helvetica=>I18N::translateContext('font name', 'Helvetica')"><var var="I18N::translate('Font')"/></Input> -->
+	<!-- <Input name="fonts" type="select" default="simkai" options="simkai=>I18N::translateContext('font name', '揩体')|simhei=>I18N::translateContext('font name', '黑体')"><var var="I18N::translate('Font')"/></Input> -->
+	<Input name="fonts" type="select" default="simkai" options="simkai=>I18N::translateContext('font name', '揩体')|simhei=>I18N::translateContext('font name', '黑体')|gbsn00lp=>I18N::translateContext('font name', '简报宋体')"><var var="I18N::translate('Font')"/></Input>
+
+	<!-- <Input name="fonts" type="select" default="simsun" options="simkai=>I18N::translateContext('font name', '揩体')|simhei=>I18N::translateContext('font name', '黑体')|simsun=>I18N::translateContext('font name', '宋体')"><var var="I18N::translate('Font')"/></Input> -->
+	<!-- <SetVar name="fonts" value="dejavusans" /> -->
+	<!-- <SetVar name="fonts" value="gbsn00lp" /> -->
 
 	<!-- Header -->
 	<Style name="header" font="$fonts" size="18"/>

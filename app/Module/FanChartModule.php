@@ -98,9 +98,11 @@ class FanChartModule extends AbstractModule implements ModuleChartInterface, Req
     private const MAXIMUM_WIDTH       = 500;
 
     // Chart layout parameters
-    private const FONT               = Webtrees::ROOT_DIR . 'resources/fonts/DejaVuSans.ttf';
+    // // private const FONT               = Webtrees::ROOT_DIR . 'resources/fonts/DejaVuSans.ttf';
+    private const FONT               = Webtrees::ROOT_DIR . 'resources/fonts/gbsn00lp.ttf';  //sfqas
     private const CHART_WIDTH_PIXELS = 800;
-    private const TEXT_SIZE_POINTS   = self::CHART_WIDTH_PIXELS / 120.0;
+    // private const TEXT_SIZE_POINTS   = self::CHART_WIDTH_PIXELS / 120.0;
+    private const TEXT_SIZE_POINTS   = self::CHART_WIDTH_PIXELS / 50.0;  //sfqas
     private const GAP_BETWEEN_RINGS  = 2;
 
     private ChartService $chart_service;

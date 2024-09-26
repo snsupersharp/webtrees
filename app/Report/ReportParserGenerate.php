@@ -2374,6 +2374,51 @@ class ReportParserGenerate extends ReportParserBase
         }
     }
 
+	
+	// sfqas
+		/**
+	 * Create a list of all descendants.first sou first
+	 *
+	 * @param string[] $list
+	 * @param string   $pid
+	 * @param bool  $parents
+	 * @param int  $generations
+	 */
+	private function addDescendancyFirstsonFirst(&$list, $pid, $maxgenerations = -1 ,$persongen = 0 ) {
+	// private function addDescendancyFirstsonFirst(&$list, $pid, $parents = false, $generations = -1) {
+		//global $WT_TREE;
+		global $personshowsequence;
+
+		//$person = Individual::getInstance($pid, $this->WT_TREE);
+		$person = Registry::individualFactory()->make($pid, $this->tree);
+		if ($person === null) {
+			return;
+		}
+		if (!isset($this->personshowsequence)){
+			$personshowsequence = 1;
+		}
+		if (!isset($list[$pid])) {
+			$list[$pid] = $person;				
+		}
+		if (!isset($list[$pid]->personshowsequence)) {
+			$list[$pid]->personshowsequence = $personshowsequence;
+		}
+		if (!isset($list[$pid]->generation)) {
+			$list[$pid]->generation = $persongen;
+		}
+		// echo 'pid=' ,$pid ,'<br>' ,'generation= ' ,$list[$pid]->generation , '<br>','personshowsequence=',$list[$pid]->personshowsequence, '<br>', '<br>';
+		if ($maxgenerations == -1 || $list[$pid]->generation  < $maxgenerations) {
+			$persongen = $persongen +1;
+			foreach ($person->spouseFamilies() as $family) {			
+				$children = $family->children();
+				foreach ($children as $child) {
+					$this->personshowsequence = $personshowsequence + 1;				
+					$this->addDescendancyFirstsonFirst($list, $child->xref(), $maxgenerations ,$persongen); // recurse on the childs family
+				}
+			}
+		}
+	}
+
     /**
      * Handle <relatives>
      *
@@ -2452,7 +2497,10 @@ class ReportParserGenerate extends ReportParserBase
                     $this->list[$id]->generation = 1;
                     $this->addDescendancy($this->list, $id, false, $maxgen);
                     break;
-                case 'all':
+                case "DescendancyFirstsunFirst":  //sfqas
+					$this->addDescendancyFirstsonFirst($this->list, $id, $maxgen, 1);
+					break;
+				case 'all':
                     $this->addAncestors($this->list, $id, true, $maxgen);
                     $this->addDescendancy($this->list, $id, true, $maxgen);
                     break;
@@ -2484,7 +2532,23 @@ class ReportParserGenerate extends ReportParserBase
                 }
                 $this->list = $newarray;
                 break;
-            default:
+            case 'firstsonfirst': //sfqas
+				$newarray = [];
+				reset($this->list);
+				$personshowsequenceucounter = 0;
+				while (count($newarray) < count($this->list)) {
+					foreach ($this->list as $key => $value) {
+						if ($value->personshowsequence == $personshowsequenceucounter) {
+							$newarray[$key]             = new \stdClass;
+							$newarray[$key]->personshowsequence = $value->personshowsequence;
+							$newarray[$key]->generation = $value->generation;
+						}
+					}
+					$personshowsequenceucounter++;
+				}
+				$this->list = $newarray;
+				break;
+			default:
                 // unsorted
                 break;
         }

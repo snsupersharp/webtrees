@@ -1,18 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Report>
-	<Title><var var="I18N::translate('Descendants')" /></Title>
-	<Description><var var="I18N::translate('A report of an individual’s descendants, in a narrative style.')" /></Description>
+	<!-- <Title><var var="I18N::translate('Descendants')" /></Title>  -->
+	<!-- <Title><var var="I18N::translate('Descendants by norman.yang')" /></Title>  -->
+	<!-- <Title><var var="I18N::translate('Descendants by norman.yang')" /></Title>  --><!-- 这里保证翻译过来是 Descendants by norman.yang ，webtree2.1.20\resources\views\report-setup-page.phtml 用来限制只用PDF显示 --> 
+	<!-- <Title><var var="I18N::translate('Descendants by norman.yang33')" /></Title> --> <!-- 这里保证翻译过来是 Descendants by norman.yang ，webtree2.1.20\resources\views\report-setup-page.phtml 用来限制只用PDF显示 --> 
+	<!-- 这个TITLE用来限制只使用PDF，这个不要修改 -->
+	<Title><var var="I18N::translate('后代图')" /></Title>
+	<!-- <Title><var var="I18N::translate('Houdaitu desgin by norman.yang')" /></Title>  -->
+	<!-- <title>后代图</title>  -->  <!-- 这里不加翻译，只会在网页里显示 <Title><var var="I18N::translate('后代图')" /></Title>   这样写会被转PDF的时候做为参数调用，不加翻译就不会   -->
+	<!-- <Description><var var="I18N::translate('后代图.')" /></Description>		 -->
+	<!-- <Description><var var="I18N::translate('    Houdaitu desgin by norman.yang')" /></Description>		 -->
+	<Description><var var="I18N::translate('杨超锐定制的后代图')" /></Description>		
+	<!-- <Description>后代图</Description>		 -->
+	<Input name="jiapumingzi" lookup="NAME" type="text"><var var="I18N::translate('家谱名字')" /></Input>
+	<!-- <rauthor>norman.yang</rauthor> -->
+	<!-- <Input name="jiapumingzi" lookup="NAME" type="text">jpmz</Input> -->
+	<!-- <SetVar name="jiapumingzi" value="家谱名字" /> -->
+	<Input name="bianzhuanrenheshijian" lookup="NAME" type="text"><var var="I18N::translate('编撰人和时间')" /></Input>
+	<!-- <Input name="bianzhuanrenheshijian" lookup="NAME" type="text">bzrhsj</Input> -->
 	<Input name="pid" lookup="INDI" type="text" default=""><var var="I18N::translate('Individual')" /></Input>
-	<Input name="maxgen" type="select" options="3=>I18N::number(3)|4=>I18N::number(4)|5=>I18N::number(5)|6=>I18N::number(6)|7=>I18N::number(7)|8=>I18N::number(8)|9=>I18N::number(9)|10=>I18N::number(10)|-1=>I18N::translate('All')"><var var="I18N::translate('Generations')" /></Input>
+	<Input name="maxgen" type="select" options="3=>I18N::number(3)|4=>I18N::number(4)|5=>I18N::number(5)|6=>I18N::number(6)|7=>I18N::number(7)|8=>I18N::number(8)|9=>I18N::number(9)"><var var="I18N::translate('Generations')" /></Input>
 	<Input name="sources" type="checkbox" default="1"><var var="I18N::translate('Show sources')" /></Input>
-	<Input name="pageSize" type="select" options="A4=>I18N::translateContext('paper size','A4')|A3=>I18N::translateContext('paper size', 'A3')|US-Letter=>I18N::translateContext('paper size','Letter')|US-Tabloid=>I18N::translateContext('paper size','Tabloid')"><var var="I18N::translate('Page size')" /></Input>
+	<Input name="pageSize" type="select" default="A3" options="A3=>I18N::translateContext('paper size', 'A3')"><var var="I18N::translate('Page size')" /></Input>
 	<!--
 	<Input name="fonts" type="select" default="dejavusans" options="arialunicid0=>I18N::translateContext('font name', 'Arial')|dejavusans=>I18N::translateContext('font name', 'DejaVu')|helvetica=>I18N::translateContext('font name', 'Helvetica')"><var var="I18N::translate('Font')"/></Input>
 	-->
-	<SetVar name="fonts" value="dejavusans" />
+	<!-- <Input name="fonts" type="select" default="simhei" options="simkai=>I18N::translateContext('font name', '揩体')|simhei=>I18N::translateContext('font name', '黑体')"><var var="I18N::translate('Font')"/></Input> -->
+	<!-- <Input name="fonts" type="select" default="gbsn00lp" options="gbsn00lp=>I18N::translateContext('font name', 'Arial')|dejavusans=>I18N::translateContext('font name', 'DejaVu')|helvetica=>I18N::translateContext('font name', 'Helvetica')"><var var="I18N::translate('Font')"/></Input> -->
+	<Input name="fonts" type="select" default="gbsn00lp" options="simkai=>I18N::translateContext('font name', '揩体')|simhei=>I18N::translateContext('font name', '黑体')|gbsn00lp=>I18N::translateContext('font name', '简报宋体')"><var var="I18N::translate('Font')"/></Input>
 
+	<!-- <SetVar name="fonts" value="dejavusans" /> -->
+	<!-- <SetVar name="fonts" value="gbsn00lp" /> -->
+	<!-- <Input name="onlyPDF" type="select" default="PDF" options="PDF=>I18N::translateContext('PDF', 'PDF')|PDF=>I18N::translateContext('PDF', 'PDF')"><var var="I18N::translate('PDF')" /></Input> -->
+	
+	
+	<!-- fengmian -->
+	<Style name="fengmian" font="$fonts" size="72"/>
 	<!-- Header -->
 	<Style name="header" font="$fonts" size="18"/>
+	<!-- Page Header text -->
+	<Style name="pageheader" font="$fonts" size="14"/>
 	<!-- Page numbers text -->
 	<Style name="pagenum" font="$fonts" size="8"/>
 	<!-- Standard text -->
@@ -26,510 +53,1624 @@
 	<!-- Date text -->
 	<Style name="date" font="$fonts" size="8"/>
 	<Style name="subheader" font="$fonts" size="12" style="b" />
+	
 	<Style name="label1" font="$fonts" size="8"/>
-	<Style name="label2" font="$fonts" size="10"/>
+	<Style name="label2" font="$fonts" size="10"/>	
 	<Style name="name" font="$fonts" size="9"/>
 	<Style name="name1" font="$fonts" size="14"/>
-
+	
+	<Style name="name2" font="$fonts" size="12"/>
+	<Style name="label3" font="$fonts" size="9"/>	
+	<Style name="name3" font="$fonts" size="9"/>
+	
+	<!-- 当前处理第一代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen1" value="-1" />
+	<!-- 当前处理第2代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen2" value="-1" />
+	<!-- 当前处理第3代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen3" value="-1" />
+	<!-- 当前处理第4代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen4" value="-1" />
+	<!-- 当前处理第5代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen5" value="-1" />
+	<!-- 当前处理第6代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen6" value="-1" />
+	<!-- 当前处理第7代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen7" value="-1" />
+	<!-- 当前处理第8代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen8" value="-1" />
+	<!-- 当前处理第9代的孩子个数 -->
+	<SetVar name="numberOfChildren_gen9" value="-1" />
+	
+	
+	<!-- 累积计数已经显示的人的序号 -->
 	<SetVar name="personNumber" value="1" />
-	<SetVar name="childNumber" value="2" />
+	<!-- 用于记录代数 -->
 	<SetVar name="generation" value="0" />
 	<!-- New Page for Sources controller if SOUR exist -->
 	<SetVar name="source_exist" value="0" />
+	
+	
+	 <!-- 上一个显示的个人的代数 -->
+	<SetVar name="generation_shangyidai" value="0" />
+	<!-- 已经显示的最大的代数 -->
+	<SetVar name="yijingxianshizuidadaishui" value="1" />
+	<!-- 用于显示家庭中个人的排行 -->
+	<!-- <SetVar name="familyChildRoman" value="1" /> -->
+	<!-- 用于指定显示个人信息框的宽度 -->
+	<SetVar name="person_widths" value="40" />
+	<!-- 用于指定显示个人信息框的高度 -->
+	<SetVar name="person_heights" value="60" />
+	<!-- 用于定位每代的左部像素 -->
+	<SetVar name="Generation_left_left_num" value="5" />
+	<!-- 用于定位每代右边的左部像素 -->
+	<SetVar name="Generation_left_left_num1" value="1060" />
+	<!-- 用于定位每代的顶部像素 -->
+	<SetVar name="Generation_left_top_num" value="30" />
+	
+	
+	<!-- 用于标记已经显示的左部像素  -->
+	<SetVar name="Generation_show_left_left_num" value="30" />
+	<!-- 用于标记已经显示的顶部像素  -->
+	<SetVar name="Generation_show_left_top_num" value="30" />
+	
+	<!-- －－－－－每个位置的参数－－－－ -->
+	<!-- 第一行的左上角左像素 -->
+	<SetVar name="1_1_L" value="30" />	
+	<!-- 第一行的左上角顶像素  -->
+	<SetVar name="1_1_T" value="30" />	
+	<!-- 第二行的左上角左像素 -->
+	<SetVar name="2_1_L" value="30" />	
+	<!-- 第二行的左上角顶像素  -->
+	<SetVar name="2_1_T" value="110" />
+	<!-- 第三行的左上角左像素 -->
+	<SetVar name="3_1_L" value="30" />	
+	<!-- 第三行的左上角顶像素  -->
+	<SetVar name="3_1_T" value="190" />
+	<!-- 第4行的左上角左像素 -->
+	<SetVar name="4_1_L" value="30" />	
+	<!-- 第4行的左上角顶像素  -->
+	<SetVar name="4_1_T" value="270" />
+	<!-- 第5行的左上角左像素 -->
+	<SetVar name="5_1_L" value="30" />	
+	<!-- 第5行的左上角顶像素  -->
+	<SetVar name="5_1_T" value="350" />
+	<!-- 第6行的左上角左像素 -->
+	<SetVar name="6_1_L" value="30" />	
+	<!-- 第6行的左上角顶像素  -->
+	<SetVar name="6_1_T" value="430" />
+	<!-- 第7行的左上角左像素 -->
+	<SetVar name="7_1_L" value="30" />	
+	<!-- 第7行的左上角顶像素  -->
+	<SetVar name="7_1_T" value="510" />
+	<!-- 第8行的左上角左像素 -->
+	<SetVar name="8_1_L" value="30" />	
+	<!-- 第8行的左上角顶像素  -->
+	<SetVar name="8_1_T" value="590" />
+	<!-- 第9行的左上角左像素 -->
+	<SetVar name="9_1_L" value="30" />	
+	<!-- 第9行的左上角顶像素  -->
+	<SetVar name="9_1_T" value="670" />
+	
+	
+	
+	<!-- 一页已经一行能显示几个，A3横着最多17代 -->
+	<!-- 如果要一页显示所有9代，这里每行显示要足够多 -->
+	<SetVar name="yiyeyihangzuiduo" value="17" />
+	<!-- 一页已经显示到几代，A3横着最多9代 -->
+	<SetVar name="yiyezuiduojidai" value="9" />
+	<!-- 用于标记向右移动了多少列 -->
+	<SetVar name="xianshiduoshaolie" value="1" />
+		
+	<!-- －－－－－每个位置的参数－－－－－－－ -->
+	<!-- 线的位置 -->
+	<!-- 第一代与直系儿辈之间的线 -->
+	<!-- 第一个出孩子 -->
+	<SetVar name="L_1_to_2_1_X1" value="120" />
+	<SetVar name="L_1_to_2_1_X2" value="$L_1_to_2_1_X1" />
+	<SetVar name="L_1_to_2_1_Y1" value="90" />
+	<SetVar name="L_1_to_2_1_Y2" value="110" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_1_to_2_2_X1" value="120" />
+	<SetVar name="L_1_to_2_2_X2" value="180" />
+	<SetVar name="L_1_to_2_2_Y1" value="100" />
+	<SetVar name="L_1_to_2_2_Y2" value="$L_1_to_2_2_Y1" />
+	
+	<!-- 第二代与直系儿辈之间的线 -->
+	<!-- 第一个出孩子 -->
+	<SetVar name="L_2_to_3_1_X1" value="120" />
+	<SetVar name="L_2_to_3_1_X2" value="$L_2_to_3_1_X1" />
+	<SetVar name="L_2_to_3_1_Y1" value="170" />
+	<SetVar name="L_2_to_3_1_Y2" value="190" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_2_to_3_2_X1" value="120" />
+	<SetVar name="L_2_to_3_2_X2" value="180" />
+	<SetVar name="L_2_to_3_2_Y1" value="180" />
+	<SetVar name="L_2_to_3_2_Y2" value="$L_2_to_3_2_Y1" />
+	
+	
+	<!-- 第三代与直系儿辈之间的线 -->
+	<!-- 第一个出孩子 -->
+	<SetVar name="L_3_to_4_1_X1" value="120" />
+	<SetVar name="L_3_to_4_1_X2" value="$L_3_to_4_1_X1" />
+	<SetVar name="L_3_to_4_1_Y1" value="250" />
+	<SetVar name="L_3_to_4_1_Y2" value="270" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_3_to_4_2_X1" value="120" />
+	<SetVar name="L_3_to_4_2_X2" value="180" />
+	<SetVar name="L_3_to_4_2_Y1" value="260" />
+	<SetVar name="L_3_to_4_2_Y2" value="$L_3_to_4_2_Y1" />
+	
+	<!-- 第四代与直系儿辈之间的线 -->
+	<!-- 第一个孩子 -->
+	<SetVar name="L_4_to_5_1_X1" value="120" />
+	<SetVar name="L_4_to_5_1_X2" value="$L_4_to_5_1_X1" />
+	<SetVar name="L_4_to_5_1_Y1" value="330" />
+	<SetVar name="L_4_to_5_1_Y2" value="350" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_4_to_5_2_X1" value="120" />
+	<SetVar name="L_4_to_5_2_X2" value="180" />
+	<SetVar name="L_4_to_5_2_Y1" value="340" />
+	<SetVar name="L_4_to_5_2_Y2" value="$L_4_to_5_2_Y1" />
+	
+	<!-- 第五代与直系儿辈之间的线 -->
+	<!-- 第一个孩子 -->
+	<SetVar name="L_5_to_6_1_X1" value="120" />
+	<SetVar name="L_5_to_6_1_X2" value="$L_5_to_6_1_X1" />
+	<SetVar name="L_5_to_6_1_Y1" value="410" />
+	<SetVar name="L_5_to_6_1_Y2" value="430" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_5_to_6_2_X1" value="120" />
+	<SetVar name="L_5_to_6_2_X2" value="180" />
+	<SetVar name="L_5_to_6_2_Y1" value="420" />
+	<SetVar name="L_5_to_6_2_Y2" value="$L_5_to_6_2_Y1" />
 
-	<Doc pageSize="$pageSize">
+	
+	<!-- 第六代与直系儿辈之间的线 -->
+	<!-- 第一个孩子 -->
+	<SetVar name="L_6_to_7_1_X1" value="120" />
+	<SetVar name="L_6_to_7_1_X2" value="$L_6_to_7_1_X1" />
+	<SetVar name="L_6_to_7_1_Y1" value="490" />
+	<SetVar name="L_6_to_7_1_Y2" value="510" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_6_to_7_2_X1" value="120" />
+	<SetVar name="L_6_to_7_2_X2" value="180" />
+	<SetVar name="L_6_to_7_2_Y1" value="500" />
+	<SetVar name="L_6_to_7_2_Y2" value="$L_6_to_7_2_Y1" />
+	
+	<!-- 第七代与直系儿辈之间的线 -->
+	<!-- 第一个孩子 -->
+	<SetVar name="L_7_to_8_1_X1" value="120" />
+	<SetVar name="L_7_to_8_1_X2" value="$L_7_to_8_1_X1" />
+	<SetVar name="L_7_to_8_1_Y1" value="570" />
+	<SetVar name="L_7_to_8_1_Y2" value="590" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_7_to_8_2_X1" value="120" />
+	<SetVar name="L_7_to_8_2_X2" value="180" />
+	<SetVar name="L_7_to_8_2_Y1" value="580" />
+	<SetVar name="L_7_to_8_2_Y2" value="$L_7_to_8_2_Y1" />
+	
+	<!-- 第八代与直系儿辈之间的线 -->
+	<!-- 第一个孩子 -->
+	<SetVar name="L_8_to_9_1_X1" value="120" />
+	<SetVar name="L_8_to_9_1_X2" value="$L_8_to_9_1_X1" />
+	<SetVar name="L_8_to_9_1_Y1" value="650" />
+	<SetVar name="L_8_to_9_1_Y2" value="670" />
+	<!-- 其它孩子的横线 -->
+	<SetVar name="L_8_to_9_2_X1" value="120" />
+	<SetVar name="L_8_to_9_2_X2" value="180" />
+	<SetVar name="L_8_to_9_2_Y1" value="660" />
+	<SetVar name="L_8_to_9_2_Y2" value="$L_8_to_9_2_Y1" />
+	
+	<!-- 线的位置 -->
+	
+	<Doc pageSize="$pageSize" orientation="landscape">
+	<!-- <Doc pageSize="$pageSize" orientation="landscape" footermargin="10" showGeneratedBy="0" headermargin="10" topmargin="10"> -->
+	<!-- 如果要一页显示所有9代，这里行宽要足够宽 -->
+	<!-- <Doc customwidth="400" customheight="841" orientation="landscape"> -->
+		
+		<!-- 好像HEADER这个实现有点问题 -->
 		<Header>
-			<Cell align="center" height="30" newline="1" style="header"><var var="I18N::translate('Descendants of ')" /><GetPersonName id="$pid" /></Cell>
-			<Cell align="rightrtl" newline="1" style="pagenum"><var var="I18N::translate('Page')" /> <PageNum /> <var var="I18N::translate('of')" /> <TotalPages /></Cell>
-		</Header>
-		<Body>
-			<Relatives id="$pid" group="descendants" sortby="generation" maxgen="$maxgen">
-				<SetVar name="showPerson" value="F" />
-				<RepeatTag tag="FAMS">
-					<Gedcom id="@FAMS:@CHIL">
-						<SetVar name="showPerson" value="T" />
-					</Gedcom>
-				</RepeatTag>
-				<if condition="$showPerson=='T'">
-					<if condition="$generation!=@generation">
-						<Cell align="center" height="20" newline="1" style="subheader"><var var="I18N::translate('Generation ')" /> <Generation /></Cell>
-						<SetVar name="generation" value="@generation" />
-					</if>
-					<TextBox border="" width="25" height="40">
-						<Text style="name"><var var="personNumber" />.</Text>
-					</TextBox>
+			<!-- 外框 -->
+			<!-- <Line x1="20" y1="20" x2="560" y2="20" />
+			<Line x1="20" y1="820" x2="560" y2="820" />
+			<Line x1="20" y1="20" x2="20" y2="820" />				
+			<Line x1="560" y1="20" x2="560" y2="820" /> -->
+			<!-- <Cell  width="182" height="300" border="2" newline="1" left="20" top="22" style="pageheader" ><var var="I18N::translate('dddddddddddddddd')" /></Cell> -->
+			<!-- <Cell width="30.0" height="500.0" newline="1" left="-20" top="88" style="header">BODY可以调试3</Cell> -->
+			<!-- 左边缝 -->
+			<!-- <Line x1="23" y1="23" x2="56" y2="23" />
+			<Line x1="23" y1="816" x2="56" y2="816" />
+			<Line x1="23" y1="23" x2="23" y2="816" />
+			<Line x1="56" y1="23" x2="56" y2="816" />
+			
+			<Line x1="23" y1="287" x2="56" y2="287" />			
+			<Line x1="23" y1="551" x2="56" y2="551" /> -->
+			<!-- 1093 －33＝1060 +20 -->
+			
+			<!-- 右边缝 -->
+			<!-- <Line x1="1127" y1="23" x2="1160" y2="23" />
+			<Line x1="1127" y1="816" x2="1160" y2="816" />
+			<Line x1="1127" y1="23" x2="1127" y2="816" />
+			<Line x1="1160" y1="23" x2="1160" y2="816" />
+			
+			<Line x1="1127" y1="287" x2="1160" y2="287" />			
+			<Line x1="1127" y1="551" x2="1160" y2="551" /> -->
+			
+			<!-- 上线 -->
+			<!-- <Line x1="23" y1="23" x2="1160" y2="23" /> -->
+			<!-- <Line x1="123" y1="323" x2="1160" y2="323" /> -->
+			<!-- 下线 -->
+			<!-- <Line x1="23" y1="816" x2="1160" y2="816" /> -->
+			
+			<!-- 主框 -->
+		<!-- 	<Line x1="62" y1="23" x2="557" y2="23" />
+			<Line x1="62" y1="816" x2="557" y2="816" />
+			<Line x1="62" y1="23" x2="62" y2="816" />
+			<Line x1="557" y1="23" x2="557" y2="816" /> -->
+			<!-- <Cell align="center" newline="1" style="header"><var var="I18N::translate('Individual')" /></Cell> -->
+			<!-- 左中缝的字 -->
+			<!-- <if condition="$jiapumingzi == ''">
+				<Cell align="center" width="18" height="300" newline="1" left="-20" top="22" style="header">  这里是家谱名字</Cell>
+			</if>
+			<Cell width="50" height="300" newline="1" style="pageheader"><var var="I18N::translate('HEADER可以调试2')" /></Cell>
+			<if condition="$jiapumingzi != ''">
+				<Cell align="center" width="18" height="300" newline="1" left="-20" top="22" style="header">  <var var="jiapumingzi" /></Cell>
+			</if>
+			<Cell align="center" width="18" height="300" newline="1" left="-20" top="288" style="header">︻  第 <PageNum /> 页   ︼</Cell>
+			<if condition="$bianzhuanrenheshijian == ''">
+				<Cell align="center" width="18" height="300" newline="1" left="-20" top="552" style="header">这里是编写时间和撰写人</Cell>
+			</if>
+			<if condition="$bianzhuanrenheshijian != ''">
+				<Cell align="center" width="18" height="300" newline="1" left="-20" top="552" style="header"><var var="bianzhuanrenheshijian" /></Cell>
+			</if> -->
+			<!-- 右中缝的字 -->
+			<!-- 如果要一页显示，要注释掉这里 -->
+			<!-- <if condition="$jiapumingzi == ''">
+				<Cell align="center" width="18" height="300" newline="1" left="1080" top="22" style="header">  这里是家谱名字</Cell>
+			</if>
+			
+			<if condition="$jiapumingzi != ''">
+				<Cell align="center" width="18" height="300" newline="1" left="1080" top="22" style="header">  <var var="jiapumingzi" /></Cell>
+			</if>
+			<Cell align="center" width="18" height="300" newline="1" left="1080" top="288" style="header">︻  第 <PageNum /> 页   ︼</Cell>
+			<if condition="$bianzhuanrenheshijian == ''">
+				<Cell align="center" width="18" height="300" newline="1" left="1080" top="552" style="header">这里是编写时间和撰写人</Cell>
+			</if>
+			<if condition="$bianzhuanrenheshijian != ''">
+				<Cell align="center" width="18" height="300" newline="1" left="1080" top="552" style="header"><var var="bianzhuanrenheshijian" /></Cell> 
+			</if> -->
+			<!-- 两边的处理 -->
+				<!-- 外框 -->
+				<!-- <Line x1="20" y1="20" x2="560" y2="20" />
+				<Line x1="20" y1="820" x2="560" y2="820" />
+				<Line x1="20" y1="20" x2="20" y2="820" />				
+				<Line x1="560" y1="20" x2="560" y2="820" /> -->
+				
+				<!-- 左边缝 -->
+				<Line x1="23" y1="23" x2="56" y2="23" />
+				<Line x1="23" y1="816" x2="56" y2="816" />
+				<Line x1="23" y1="23" x2="23" y2="816" />
+				<Line x1="56" y1="23" x2="56" y2="816" />
+				
+				<Line x1="23" y1="287" x2="56" y2="287" />			
+				<Line x1="23" y1="450" x2="56" y2="450" />
+				<!-- 1093 －33＝1060 +20 -->
+				
+				<!-- 右边缝 -->
+				<Line x1="1127" y1="23" x2="1160" y2="23" />
+				<Line x1="1127" y1="816" x2="1160" y2="816" />
+				<Line x1="1127" y1="23" x2="1127" y2="816" />
+				<Line x1="1160" y1="23" x2="1160" y2="816" />
+				
+				<Line x1="1127" y1="287" x2="1160" y2="287" />			
+				<Line x1="1127" y1="450" x2="1160" y2="450" />
+				
+				<!-- 上线 -->
+				<Line x1="23" y1="23" x2="1160" y2="23" />
+				<!-- 下线 -->
+				<Line x1="23" y1="816" x2="1160" y2="816" />
+				
+				<!-- 主框 -->
+			<!-- 	<Line x1="62" y1="23" x2="557" y2="23" />
+				<Line x1="62" y1="816" x2="557" y2="816" />
+				<Line x1="62" y1="23" x2="62" y2="816" />
+				<Line x1="557" y1="23" x2="557" y2="816" /> -->
+				
+				<!-- 两边的处理 -->
+				
+				<!-- 左中缝的字 -->
+				<if condition="$jiapumingzi == ''">
+					<Cell width="24.0" height="300.0" newline="1" left="-24" top="35" style="header"><var var="I18N::translate('这里是家谱名字')" /></Cell>
+				</if>
+				<if condition="$jiapumingzi !== ''">
+					<Cell width="24.0" height="300.0" newline="1" left="-24" top="35" style="header"><var var="$jiapumingzi" /></Cell>
+				</if>
+				<Cell align="center" width="24" height="300" newline="1" left="-24" top="288" style="header">︻  第 <PageNum /> 页   ︼</Cell>
+				<if condition="$bianzhuanrenheshijian == ''">
+					<Cell width="24" height="300" newline="1" left="-24" top="460" style="header">这里是编写时间和撰写人</Cell>
+				</if>
+				<if condition="$bianzhuanrenheshijian !== ''">
+					<Cell  width="24.0" height="200.0" newline="1" left="-24" top="460" style="header"><var var="$bianzhuanrenheshijian" /></Cell>
+				</if>
+				
+				<!-- 右中缝的字 -->
+				<if condition="$jiapumingzi == ''">
+					<Cell width="24.0" height="300.0" newline="1" left="1080" top="35" style="header"><var var="I18N::translate('这里是家谱名字')" /></Cell>
+				</if>
+				<if condition="$jiapumingzi !== ''">
+					<Cell width="24.0" height="300.0" newline="1" left="1080" top="35" style="header"><var var="$jiapumingzi" /></Cell>
+				</if>
+			
+				<Cell align="center" width="24" height="300" newline="1" left="1080" top="288" style="header">︻  第 <PageNum /> 页   ︼</Cell>
+				<if condition="$bianzhuanrenheshijian == ''">
+					<Cell width="24" height="300" newline="1" left="1080" top="460" style="header">这里是编写时间和撰写人</Cell>
+				</if>
+				<if condition="$bianzhuanrenheshijian !== ''">
+					<Cell  width="24.0" height="200.0" newline="1" left="1080" top="460" style="header"><var var="$bianzhuanrenheshijian" /></Cell>
+				</if>
 
-					<TextBox border="" height="40" newline="1">
-						<Text style="name"><GetPersonName id="" /> </Text>
-						<if condition="$sources=='on'">
-							<!-- print level 1 sources -->
-							<RepeatTag tag="SOUR">
-								<Footnote>
-									<Gedcom id="@SOUR">
-										<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-										«<GedcomValue tag="TITL" />»
-										<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-									</Gedcom>
-									<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-									 <GedcomValue tag="SOUR:DATA:TEXT" />
-								</Footnote>
-								<SetVar name="source_exist" value="1"/>
-							</RepeatTag>
-							<!-- print level 2 sources attached to NAME -->
-							<RepeatTag tag="NAME:SOUR">
-								<Footnote>
-									<Gedcom id="@SOUR">
-										<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-										«<GedcomValue tag="TITL" />»
-										<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-									</Gedcom>
-									<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-									 <GedcomValue tag="SOUR:DATA:TEXT" />
-								</Footnote>
-								<SetVar name="source_exist" value="1" />
-							</RepeatTag>
-						</if>
-						<SetVar name="printPeriod" value="false" />
-						<SetVar name="gender" value="male" />
-						<if condition="@SEX=='F'">
-							<SetVar name="gender" value="female" />
-						</if>
-						<SetVar name="birtExists" value="false" />
-						<Gedcom id="BIRT">
-							<SetVar name="birtExists" value="true" />
-							<SetVar name="printPeriod" value="true" />
+				
+				
+			<!-- 其它每页都有的信息 -->
+			<!-- <Line x1="23" y1="15" x2="1160" y2="15" />	 -->
+			<!-- <Cell width="24" height="300" newline="1" left="-20" top="288" style="header">︻  第 <PageNum /> 页   ︼</Cell> -->
+			
+		</Header>
+		
+		<Body>
+			<!-- <NewPage/> -->
+			<!-- 封面页内容 -->
+			<Cell width="80" height="300.0" newline="1" left="350" top="200" style="fengmian"><var var="后代图" /></Cell>
+			<if condition="$jiapumingzi == ''">
+				<Cell width="80" height="300.0" newline="1" left="140" top="35" style="fengmian"><var var="I18N::translate('这里是家谱名字')" /></Cell>
+			</if>
+			<if condition="$jiapumingzi !== ''">
+				<Cell width="80" height="300.0" newline="1" left="240" top="35" style="fengmian"><var var="$jiapumingzi" /></Cell>
+			</if>
+			<!--  封面页内容  -->
+			<!-- 上面一页为封面页 -->
+			<NewPage/>
+			
+				
+			<Relatives id="$pid" group="DescendancyFirstsunFirst" sortby="firstsonfirst" maxgen="$maxgen">
+				<!-- 记录已经显示的最大代数 -->
+				<if condition="@generation > $yijingxianshizuidadaishui">
+					<SetVar name="yijingxianshizuidadaishui" value="@generation" />
+				</if>
+				<!-- if里可以用大于这个判断，不可以用小于 -->
+
+
+				<!-- 如果当前个人的最右边超出了边距，新建页,a3横着最多台显示17列 -->
+					<if condition="$xianshiduoshaolie > $yiyeyihangzuiduo" >
+								<!-- <Cell border="1" align="center" width="20" height="20" left="100" top="500" style="subheader"> 新建页</Cell> -->
+								<!-- 新建一页 -->
+								<NewPage/>
+								<!-- 初始化位置参数 -->
+								<!-- 第一行的左上角左像素 -->
+								<SetVar name="1_1_L" value="30" />	
+								<!-- 第一行的左上角顶像素  -->
+								<SetVar name="1_1_T" value="30" />	
+								<!-- 第二行的左上角左像素 -->
+								<SetVar name="2_1_L" value="30" />	
+								<!-- 第二行的左上角顶像素  -->
+								<SetVar name="2_1_T" value="110" />
+								<!-- 第三行的左上角左像素 -->
+								<SetVar name="3_1_L" value="30" />	
+								<!-- 第三行的左上角顶像素  -->
+								<SetVar name="3_1_T" value="190" />
+								<!-- 第4行的左上角左像素 -->
+								<SetVar name="4_1_L" value="30" />	
+								<!-- 第4行的左上角顶像素  -->
+								<SetVar name="4_1_T" value="270" />
+								<!-- 第5行的左上角左像素 -->
+								<SetVar name="5_1_L" value="30" />	
+								<!-- 第5行的左上角顶像素  -->
+								<SetVar name="5_1_T" value="350" />
+								<!-- 第6行的左上角左像素 -->
+								<SetVar name="6_1_L" value="30" />	
+								<!-- 第6行的左上角顶像素  -->
+								<SetVar name="6_1_T" value="430" />
+								<!-- 第7行的左上角左像素 -->
+								<SetVar name="7_1_L" value="30" />	
+								<!-- 第7行的左上角顶像素  -->
+								<SetVar name="7_1_T" value="510" />
+								<!-- 第8行的左上角左像素 -->
+								<SetVar name="8_1_L" value="30" />	
+								<!-- 第8行的左上角顶像素  -->
+								<SetVar name="8_1_T" value="590" />
+								<!-- 第9行的左上角左像素 -->
+								<SetVar name="9_1_L" value="30" />	
+								<!-- 第9行的左上角顶像素  -->
+								<SetVar name="9_1_T" value="670" />
+								
+								<!-- 用于标记已经显示的左部像素  -->
+								<SetVar name="Generation_show_left_left_num" value="30" />
+								<!-- 用于标记已经显示的顶部像素  -->
+								<SetVar name="Generation_show_left_top_num" value="30" />
+								<!-- 用于定位每代的左部像素 -->
+								<SetVar name="Generation_left_left_num" value="5" />
+								<!-- 用于定位每代的顶部像素 -->
+								<SetVar name="Generation_left_top_num" value="30" />
+								<!-- 已经显示的最大的代数 -->
+								<SetVar name="yijingxianshizuidadaishui" value="1" />
+								<!-- 上一个显示的个人的代数 -->
+								<SetVar name="generation_shangyidai" value="0" />
+								<!-- 累积计数已经显示的人的序号 -->
+								<!-- <SetVar name="personNumber" value="1" /> -->
+								<!-- 用于记录代数 -->
+								<SetVar name="generation" value="0" />	
+								<!-- 用于标记向右移动了多少列 -->
+								<SetVar name="xianshiduoshaolie" value="1" />
+								<!-- 线的位置 -->
+								<!-- 第一代与直系儿辈之间的线 -->
+								<!-- 第一个出孩子 -->
+								<SetVar name="L_1_to_2_1_X1" value="120" />
+								<SetVar name="L_1_to_2_1_X2" value="$L_1_to_2_1_X1" />
+								<SetVar name="L_1_to_2_1_Y1" value="90" />
+								<SetVar name="L_1_to_2_1_Y2" value="110" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_1_to_2_2_X1" value="120" />
+								<SetVar name="L_1_to_2_2_X2" value="180" />
+								<SetVar name="L_1_to_2_2_Y1" value="100" />
+								<SetVar name="L_1_to_2_2_Y2" value="$L_1_to_2_2_Y1" />
+								
+								<!-- 第二代与直系儿辈之间的线 -->
+								<!-- 第一个出孩子 -->
+								<SetVar name="L_2_to_3_1_X1" value="120" />
+								<SetVar name="L_2_to_3_1_X2" value="$L_2_to_3_1_X1" />
+								<SetVar name="L_2_to_3_1_Y1" value="170" />
+								<SetVar name="L_2_to_3_1_Y2" value="190" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_2_to_3_2_X1" value="120" />
+								<SetVar name="L_2_to_3_2_X2" value="180" />
+								<SetVar name="L_2_to_3_2_Y1" value="180" />
+								<SetVar name="L_2_to_3_2_Y2" value="$L_2_to_3_2_Y1" />
+								
+								
+								<!-- 第三代与直系儿辈之间的线 -->
+								<!-- 第一个出孩子 -->
+								<SetVar name="L_3_to_4_1_X1" value="120" />
+								<SetVar name="L_3_to_4_1_X2" value="$L_3_to_4_1_X1" />
+								<SetVar name="L_3_to_4_1_Y1" value="250" />
+								<SetVar name="L_3_to_4_1_Y2" value="270" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_3_to_4_2_X1" value="120" />
+								<SetVar name="L_3_to_4_2_X2" value="180" />
+								<SetVar name="L_3_to_4_2_Y1" value="260" />
+								<SetVar name="L_3_to_4_2_Y2" value="$L_3_to_4_2_Y1" />
+								
+								<!-- 第四代与直系儿辈之间的线 -->
+								<!-- 第一个孩子 -->
+								<SetVar name="L_4_to_5_1_X1" value="120" />
+								<SetVar name="L_4_to_5_1_X2" value="$L_4_to_5_1_X1" />
+								<SetVar name="L_4_to_5_1_Y1" value="330" />
+								<SetVar name="L_4_to_5_1_Y2" value="350" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_4_to_5_2_X1" value="120" />
+								<SetVar name="L_4_to_5_2_X2" value="180" />
+								<SetVar name="L_4_to_5_2_Y1" value="340" />
+								<SetVar name="L_4_to_5_2_Y2" value="$L_4_to_5_2_Y1" />
+								
+								<!-- 第五代与直系儿辈之间的线 -->
+								<!-- 第一个孩子 -->
+								<SetVar name="L_5_to_6_1_X1" value="120" />
+								<SetVar name="L_5_to_6_1_X2" value="$L_5_to_6_1_X1" />
+								<SetVar name="L_5_to_6_1_Y1" value="410" />
+								<SetVar name="L_5_to_6_1_Y2" value="430" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_5_to_6_2_X1" value="120" />
+								<SetVar name="L_5_to_6_2_X2" value="180" />
+								<SetVar name="L_5_to_6_2_Y1" value="420" />
+								<SetVar name="L_5_to_6_2_Y2" value="$L_5_to_6_2_Y1" />
+
+								
+								<!-- 第六代与直系儿辈之间的线 -->
+								<!-- 第一个孩子 -->
+								<SetVar name="L_6_to_7_1_X1" value="120" />
+								<SetVar name="L_6_to_7_1_X2" value="$L_6_to_7_1_X1" />
+								<SetVar name="L_6_to_7_1_Y1" value="490" />
+								<SetVar name="L_6_to_7_1_Y2" value="510" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_6_to_7_2_X1" value="120" />
+								<SetVar name="L_6_to_7_2_X2" value="180" />
+								<SetVar name="L_6_to_7_2_Y1" value="500" />
+								<SetVar name="L_6_to_7_2_Y2" value="$L_6_to_7_2_Y1" />
+								
+								<!-- 第七代与直系儿辈之间的线 -->
+								<!-- 第一个孩子 -->
+								<SetVar name="L_7_to_8_1_X1" value="120" />
+								<SetVar name="L_7_to_8_1_X2" value="$L_7_to_8_1_X1" />
+								<SetVar name="L_7_to_8_1_Y1" value="570" />
+								<SetVar name="L_7_to_8_1_Y2" value="590" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_7_to_8_2_X1" value="120" />
+								<SetVar name="L_7_to_8_2_X2" value="180" />
+								<SetVar name="L_7_to_8_2_Y1" value="580" />
+								<SetVar name="L_7_to_8_2_Y2" value="$L_7_to_8_2_Y1" />
+								
+								<!-- 第八代与直系儿辈之间的线 -->
+								<!-- 第一个孩子 -->
+								<SetVar name="L_8_to_9_1_X1" value="120" />
+								<SetVar name="L_8_to_9_1_X2" value="$L_8_to_9_1_X1" />
+								<SetVar name="L_8_to_9_1_Y1" value="650" />
+								<SetVar name="L_8_to_9_1_Y2" value="670" />
+								<!-- 其它孩子的横线 -->
+								<SetVar name="L_8_to_9_2_X1" value="120" />
+								<SetVar name="L_8_to_9_2_X2" value="180" />
+								<SetVar name="L_8_to_9_2_Y1" value="660" />
+								<SetVar name="L_8_to_9_2_Y2" value="$L_8_to_9_2_Y1" />
+							<!-- 线的位置 -->
+					</if>
+				<!-- </if> -->
+				<!-- 预处理位置参数 -->
+				<!-- <Cell align="center" newline="1" style="header"><var var="I18N::translate('可以调试')" /></Cell> -->
+				<if condition="@generation==1">
+					<SetVar name="Generation_left_top_num" value="$1_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$1_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$1_1_L" />
+					<SetVar name="1_1_L" value="$1_1_L + 60" />
+					
+				</if>
+				<if condition="@generation==2">
+					<SetVar name="Generation_left_top_num" value="$2_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$2_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$2_1_L" />
+					<!-- 如果上一个显示的是自己的平辈，说明他没有后代，或是达到选择的最大代，后代的都要加一位 -->
+					<!-- $eneration_shangyidai是上一位的代数。@generation是当前这个人的代数 -->
+					<if condition="$generation_shangyidai==@generation">
+						
+							<SetVar name="3_1_L" value="$2_1_L" />
+							<SetVar name="4_1_L" value="$2_1_L" />
+							<SetVar name="5_1_L" value="$2_1_L" />
+							<SetVar name="6_1_L" value="$2_1_L" />
+							<SetVar name="7_1_L" value="$2_1_L" />
+							<SetVar name="8_1_L" value="$2_1_L" />
+							<SetVar name="9_1_L" value="$2_1_L" />
+						
+					</if>
+					<!-- 如果自己不是最后一代，则比自己低辈的都要右移一位 -->
+					<if condition="$yijingxianshizuidadaishui > @generation">	
+							<SetVar name="3_1_L" value="$2_1_L" />
+							<SetVar name="4_1_L" value="$2_1_L" />
+							<SetVar name="5_1_L" value="$2_1_L" />
+							<SetVar name="6_1_L" value="$2_1_L" />
+							<SetVar name="7_1_L" value="$2_1_L" />
+							<SetVar name="8_1_L" value="$2_1_L" />
+							<SetVar name="9_1_L" value="$2_1_L" />	
+					</if>
+					<SetVar name="2_1_L" value="$2_1_L + 60" />
+				</if>
+				<if condition="@generation==3">
+					<SetVar name="Generation_left_top_num" value="$3_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$3_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$3_1_L" />
+					<if condition="$generation_shangyidai==@generation">
+						<SetVar name="4_1_L" value="$3_1_L" />
+						<SetVar name="5_1_L" value="$3_1_L" />
+						<SetVar name="6_1_L" value="$3_1_L" />
+						<SetVar name="7_1_L" value="$3_1_L" />
+						<SetVar name="8_1_L" value="$3_1_L" />
+						<SetVar name="9_1_L" value="$3_1_L" />
+					</if>
+					<if condition="$yijingxianshizuidadaishui > @generation">	
+						<SetVar name="4_1_L" value="$3_1_L" />
+						<SetVar name="5_1_L" value="$3_1_L" />
+						<SetVar name="6_1_L" value="$3_1_L" />
+						<SetVar name="7_1_L" value="$3_1_L" />
+						<SetVar name="8_1_L" value="$3_1_L" />
+						<SetVar name="9_1_L" value="$3_1_L" />	
+					</if>
+					<SetVar name="3_1_L" value="$3_1_L + 60" />
+					<SetVar name="1_1_L" value="$3_1_L" />
+					<SetVar name="2_1_L" value="$3_1_L" />
+				</if>
+				<if condition="@generation==4">
+					<SetVar name="Generation_left_top_num" value="$4_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$4_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$4_1_L" />
+					<if condition="$generation_shangyidai==@generation">
+						<SetVar name="5_1_L" value="$4_1_L" />
+						<SetVar name="6_1_L" value="$4_1_L" />
+						<SetVar name="7_1_L" value="$4_1_L" />
+						<SetVar name="8_1_L" value="$4_1_L" />
+						<SetVar name="9_1_L" value="$4_1_L" />
+					</if>
+					<if condition="$yijingxianshizuidadaishui > @generation">	
+						<SetVar name="5_1_L" value="$4_1_L" />
+						<SetVar name="6_1_L" value="$4_1_L" />
+						<SetVar name="7_1_L" value="$4_1_L" />
+						<SetVar name="8_1_L" value="$4_1_L" />
+						<SetVar name="9_1_L" value="$4_1_L" />	
+					</if>
+					<SetVar name="4_1_L" value="$4_1_L + 60" />
+					<SetVar name="1_1_L" value="$4_1_L" />
+					<SetVar name="2_1_L" value="$4_1_L" />
+					<SetVar name="3_1_L" value="$4_1_L" />					
+				</if>
+				<if condition="@generation==5">
+					<SetVar name="Generation_left_top_num" value="$5_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$5_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$5_1_L" />
+					<if condition="$generation_shangyidai==@generation">
+						<SetVar name="6_1_L" value="$5_1_L" />
+						<SetVar name="7_1_L" value="$5_1_L" />
+						<SetVar name="8_1_L" value="$5_1_L" />
+						<SetVar name="9_1_L" value="$5_1_L" />
+					</if>
+					<if condition="$yijingxianshizuidadaishui > @generation">	
+						<SetVar name="6_1_L" value="$5_1_L" />
+						<SetVar name="7_1_L" value="$5_1_L" />
+						<SetVar name="8_1_L" value="$5_1_L" />
+						<SetVar name="9_1_L" value="$5_1_L" />
+					</if>
+					<SetVar name="5_1_L" value="$5_1_L + 60" />
+					<SetVar name="1_1_L" value="$5_1_L" />
+					<SetVar name="2_1_L" value="$5_1_L" />
+					<SetVar name="3_1_L" value="$5_1_L" />
+					<SetVar name="4_1_L" value="$5_1_L" />
+				</if>
+				<if condition="@generation==6">
+					<SetVar name="Generation_left_top_num" value="$6_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$6_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$6_1_L" />
+					<if condition="$generation_shangyidai==@generation">
+						<SetVar name="7_1_L" value="$6_1_L" />
+						<SetVar name="8_1_L" value="$6_1_L" />
+						<SetVar name="9_1_L" value="$6_1_L" />
+					</if>
+					<if condition="$yijingxianshizuidadaishui > @generation">	
+						<SetVar name="7_1_L" value="$6_1_L" />
+						<SetVar name="8_1_L" value="$6_1_L" />
+						<SetVar name="9_1_L" value="$6_1_L" />
+					</if>
+					<SetVar name="6_1_L" value="$6_1_L + 60" />
+					<SetVar name="1_1_L" value="$6_1_L" />
+					<SetVar name="2_1_L" value="$6_1_L" />
+					<SetVar name="3_1_L" value="$6_1_L" />
+					<SetVar name="4_1_L" value="$6_1_L" />
+					<SetVar name="5_1_L" value="$6_1_L" />
+				</if>
+				<if condition="@generation==7">
+					<SetVar name="Generation_left_top_num" value="$7_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$7_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$7_1_L" />
+					<if condition="$generation_shangyidai==@generation">
+						<SetVar name="8_1_L" value="$7_1_L" />
+						<SetVar name="9_1_L" value="$7_1_L" />
+					</if>
+					<if condition="$yijingxianshizuidadaishui > @generation">	
+						<SetVar name="8_1_L" value="$7_1_L" />
+						<SetVar name="9_1_L" value="$7_1_L" />
+					</if>
+					<SetVar name="7_1_L" value="$7_1_L + 60" />
+					<SetVar name="1_1_L" value="$7_1_L" />
+					<SetVar name="2_1_L" value="$7_1_L" />
+					<SetVar name="3_1_L" value="$7_1_L" />
+					<SetVar name="4_1_L" value="$7_1_L" />
+					<SetVar name="5_1_L" value="$7_1_L" />
+				</if>
+				<if condition="@generation==8">
+					<SetVar name="Generation_left_top_num" value="$8_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$8_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$8_1_L" />
+					<if condition="$generation_shangyidai==@generation">
+						<SetVar name="9_1_L" value="$8_1_L" />
+					</if>
+					<if condition="$yijingxianshizuidadaishui > @generation">	
+						<SetVar name="9_1_L" value="$8_1_L" />
+					</if>
+					<SetVar name="8_1_L" value="$8_1_L + 60" />
+					<SetVar name="1_1_L" value="$8_1_L" />
+					<SetVar name="2_1_L" value="$8_1_L" />
+					<SetVar name="3_1_L" value="$8_1_L" />
+					<SetVar name="4_1_L" value="$8_1_L" />
+					<SetVar name="5_1_L" value="$8_1_L" />
+					<SetVar name="6_1_L" value="$8_1_L" />
+					<SetVar name="7_1_L" value="$8_1_L" />
+				</if>
+				<if condition="@generation==9">
+					<SetVar name="Generation_left_top_num" value="$9_1_T" />
+					<SetVar name="Generation_show_left_top_num" value="$9_1_T" />
+					<SetVar name="Generation_show_left_left_num" value="$9_1_L" />
+					<SetVar name="9_1_L" value="$9_1_L + 60" />
+					<SetVar name="1_1_L" value="$9_1_L" />
+					<SetVar name="2_1_L" value="$9_1_L" />
+					<SetVar name="3_1_L" value="$9_1_L" />
+					<SetVar name="4_1_L" value="$9_1_L" />
+					<SetVar name="5_1_L" value="$9_1_L" />
+					<SetVar name="6_1_L" value="$9_1_L" />
+					<SetVar name="7_1_L" value="$9_1_L" />
+					<SetVar name="8_1_L" value="$9_1_L" />
+				</if>
+				<!-- 处理个人与个人间的线条 -->
+				
+				<!-- 预处理位置参数 -->
+				
+				<!-- $generation是上一位的代数。@generation是当前这个人的代数 -->
+				<if condition="$generation!=@generation">
+					<!-- 侧边代数 -->
+					<Cell border="0" align="center" width="20" height="20" left="$Generation_left_left_num" top="$Generation_left_top_num" style="subheader">第 <Generation /> 代</Cell>
+					<!-- 如果要一页显示，要注释掉这里一行 -->
+					<Cell border="0" align="center" width="20" height="20" left="$Generation_left_left_num1" top="$Generation_left_top_num" style="subheader">第 <Generation /> 代</Cell>
+					<SetVar name="generation" value="@generation" />
+				</if>
+				
+				
+				<TextBox border="0" width="20" height="40" left="$Generation_show_left_left_num" top="$Generation_show_left_top_num">
+					<!-- 个人此次显示的排列序号 -->					
+					<Text style="name"><var var="personNumber" /></Text>
+				</TextBox>
+				<TextBox  border="1" width="$person_widths" height="$person_heights" >
+					<!-- <Text style="name"><var var="Generation_show_left_left_num" /> </Text>
+					<Text style="name"><var var="Generation_show_left_top_num" /> </Text> -->
+					
+					<!-- 显示名字 -->
+					<TextBox  border="0" width="12" height="$person_heights" >
+						<Text style="name2"><GetPersonName id="" /> </Text>
+					</TextBox>					
+					<!-- 显示个人ID -->
+					<!-- <Text style="name"> <GedcomValue tag="@id" /> </Text> -->
+					<!-- 显示个人代数 -->
+					<!-- <Text style="name"> <GedcomValue tag="@generation" /> </Text> -->
+				
+					<!-- 默认是男性，判断是不是女性 -->
+					<SetVar name="gender" value="male" />				
+					<if condition="@SEX=='F'">
+						<SetVar name="gender" value="female" />
+					</if>
+					<SetVar name="multmarrExists" value="false" />
+					<RepeatTag tag="FAMS">
+						<Gedcom id="@FAMS">
+							<SetVar name="marrExists" value="false" />
 							<if condition="$gender=='male'">
-								<Text style="label1"> <var var="I18N::translateContext('MALE', 'was born')" /> </Text>
-							</if>
-							<if condition="$gender=='female'">
-								<Text style="label1"> <var var="I18N::translateContext('FEMALE', 'was born')" /> </Text>
-							</if>
-							<if condition="$sources=='on'">
-								<RepeatTag tag="BIRT:SOUR">
-									<Footnote>
-										<Gedcom id="@SOUR">
-											<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-											«<GedcomValue tag="TITL" />»
-											<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-										</Gedcom>
-										<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-										 <GedcomValue tag="SOUR:DATA:TEXT" />
-									</Footnote>
-									<SetVar name="source_exist" value="1"/>
-								</RepeatTag>
-							</if>
-							<if condition="@DATE!=''">
-								<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
-							</if>
-							<if condition="@PLAC!=''">
-								<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
-							</if>
-						</Gedcom>
-						<Gedcom id="DEAT">
-							<SetVar name="printPeriod" value="true" />
-							<if condition="$birtExists=='true'">
-								<Text style="label1"> <var var="I18N::translate('and')" /></Text>
-							</if>
-							<if condition="$gender=='male'">
-								<Text style="label1"> <var var="I18N::translateContext('MALE', 'died')" /> </Text>
-							</if>
-							<if condition="$gender=='female'">
-								<Text style="label1"> <var var="I18N::translateContext('FEMALE', 'died')" /> </Text>
-							</if>
-							<if condition="$sources=='on'">
-								<RepeatTag tag="DEAT:SOUR">
-									<Footnote>
-										<Gedcom id="@SOUR">
-											<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-											«<GedcomValue tag="TITL" />»
-											<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-										</Gedcom>
-										<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-										 <GedcomValue tag="SOUR:DATA:TEXT" />
-									</Footnote>
-									<SetVar name="source_exist" value="1"/>
-								</RepeatTag>
-							</if>
-							<if condition="@DATE!=''">
-								<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
-							</if>
-							<if condition="@PLAC!=''">
-								<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
-							</if>
-						</Gedcom>
-						<SetVar name="printPronoun" value="false" />
-						<if condition="$printPeriod=='true'">
-							<Text style="label1">.</Text>
-							<SetVar name="printPronoun" value="true" />
-						</if>
-						<RepeatTag tag="FAMS">
-							<SetVar name="printPeriod" value="false" />
-							<Gedcom id="@FAMS">
-								<SetVar name="marrExists" value="false" />
-								<if condition="$gender=='male'">
-									<Gedcom id="MARR">
-										<SetVar name="marrExists" value="true" />
-										<if condition="$printPronoun=='true'" >
-											<Text style="label1">  <var var="I18N::translate('He married')" /> </Text>
-										</if>
-										<if condition="$printPronoun=='false'" >
-											<Text style="label1">  <var var="I18N::translateContext('MALE', 'married')" /> </Text>
-										</if>
-										<SetVar name="printPeriod" value="true" />
-										<if condition="$sources=='on'">
-											<RepeatTag tag="MARR:SOUR">
-												<Footnote>
-													<Gedcom id="@SOUR">
-														<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-														«<GedcomValue tag="TITL" />»
-														<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-													</Gedcom>
-													<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-													 <GedcomValue tag="SOUR:DATA:TEXT" />
-												</Footnote>
-												<SetVar name="source_exist" value="1"/>
-											</RepeatTag>
-										</if>
-									</Gedcom>
-									<if condition="$marrExists=='true'">
-										<Gedcom id="@WIFE">
-											<Text style="name"> <GetPersonName id="" /> </Text>
-											<if condition="$sources=='on'">
-												<!-- print level 1 sources -->
-												<RepeatTag tag="SOUR">
-													<Footnote>
-														<Gedcom id="@SOUR">
-															<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-															«<GedcomValue tag="TITL" />»
-															<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-														</Gedcom>
-														<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-														 <GedcomValue tag="SOUR:DATA:TEXT" />
-													</Footnote>
-													<SetVar name="source_exist" value="1"/>
-												</RepeatTag>
-												<!-- print level 2 sources attached to NAME -->
-												<RepeatTag tag="NAME:SOUR">
-													<Footnote>
-														<Gedcom id="@SOUR">
-															<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-															«<GedcomValue tag="TITL" />»
-															<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-														</Gedcom>
-														<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-														 <GedcomValue tag="SOUR:DATA:TEXT" />
-													</Footnote>
-													<SetVar name="source_exist" value="1" />
-												</RepeatTag>
-											</if>
-											<Gedcom id="@FAMC">
-												<Text style="label1"> <var var="I18N::translate('daughter of')" /></Text>
-												<Text style="name"> <GetPersonName id="@HUSB" /> </Text>
-												<Gedcom id="@HUSB">
-													<Gedcom id="@FAMS:@WIFE">
-														<Text style="label1"> <var var="I18N::translate('and')" /></Text>
-													</Gedcom>
-												</Gedcom>
-												<Text style="name"> <GetPersonName id="@WIFE" /> </Text>
-											</Gedcom>
-										</Gedcom>
-									</if>
-								</if>
-								<if condition="$gender=='female'">
-									<Gedcom id="MARR">
-										<SetVar name="marrExists" value="true" />
-										<if condition="$printPronoun=='true'" >
-											<Text style="label1">  <var var="I18N::translate('She married')" /> </Text>
-										</if>
-										<if condition="$printPronoun=='false'" >
-											<Text style="label1"> <var var="I18N::translateContext('FEMALE', 'married')" /> </Text>
-										</if>
-										<SetVar name="printPeriod" value="true" />
-										<if condition="$sources=='on'">
-											<RepeatTag tag="MARR:SOUR">
-												<Footnote>
-													<Gedcom id="@SOUR">
-														<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-														«<GedcomValue tag="TITL" />»
-														<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-													</Gedcom>
-													<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-													 <GedcomValue tag="SOUR:DATA:TEXT" />
-												</Footnote>
-												<SetVar name="source_exist" value="1"/>
-											</RepeatTag>
-										</if>
-									</Gedcom>
-									<if condition="$marrExists=='true'">
-										<Gedcom id="@HUSB">
-											<Text style="name"> <GetPersonName id="" /> </Text>
-											<if condition="$sources=='on'">
-												<!-- print level 1 sources -->
-												<RepeatTag tag="SOUR">
-													<Footnote>
-														<Gedcom id="@SOUR">
-															<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-															«<GedcomValue tag="TITL" />»
-															<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-														</Gedcom>
-														<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-														 <GedcomValue tag="SOUR:DATA:TEXT" />
-													</Footnote>
-													<SetVar name="source_exist" value="1"/>
-												</RepeatTag>
-												<!-- print level 2 sources attached to NAME -->
-												<RepeatTag tag="NAME:SOUR">
-													<Footnote>
-														<Gedcom id="@SOUR">
-															<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-															«<GedcomValue tag="TITL" />»
-															<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-														</Gedcom>
-														<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-														 <GedcomValue tag="SOUR:DATA:TEXT" />
-													</Footnote>
-													<SetVar name="source_exist" value="1" />
-												</RepeatTag>
-											</if>
-											<Gedcom id="@FAMC">
-												<Text style="label1"> <var var="I18N::translate('son of')" /></Text>
-												<Text style="name"> <GetPersonName id="@HUSB" /></Text>
-												<Gedcom id="@HUSB">
-													<Gedcom id="@FAMS:@WIFE">
-														<Text style="label1"> <var var="I18N::translate('and')" /></Text>
-													</Gedcom>
-												</Gedcom>
-												<Text style="name"> <GetPersonName id="@WIFE" /></Text>
-											</Gedcom>
-										</Gedcom>
-									</if>
-								</if>
 								<Gedcom id="MARR">
-									<Text style="label1"> <var var=" " /></Text>
-									<if condition="@DATE!=''">
-										<SetVar name="printPeriod" value="true" />
-										<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2"/></Text>
-									</if>
-									<if condition="@PLAC!=''">
-										<SetVar name="printPeriod" value="true" />
-										<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2"/></Text>
+									<SetVar name="marrExists" value="true" />										
+									<!-- 妻子 -->									
+									<if condition="$multmarrExists=='false'">
+										<TextBox  border="0" width="9" height="$person_heights" >
+											<Text style="label3">  妻子</Text>
+										</TextBox>
 									</if>
 								</Gedcom>
-								<if condition="$printPeriod=='true'">
-									<Text style="label1">.</Text>
-									<SetVar name="printPronoun" value="true" />
-								</if>
 								<if condition="$marrExists=='true'">
-									<if condition="$gender=='male'">
-										<Gedcom id="@WIFE">
-											<SetVar name="printPeriod" value="false" />
-											<SetVar name="birtExist" value="false" />
-											<SetVar name="printPronoun" value="true" />
-											<Gedcom id="BIRT">
-												<if condition="$printPronoun=='true'">
-													<SetVar name="printPeriod" value="true" />
-													<Text style="label1">  <var var="I18N::translate('She was born')" /></Text>
-													<SetVar name="printPronoun" value="false" />
-												</if>
-												<SetVar name="birtExist" value="true" />
-												<if condition="$sources=='on'">
-													<RepeatTag tag="BIRT:SOUR">
-														<Footnote>
-															<Gedcom id="@SOUR">
-																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-																«<GedcomValue tag="TITL" />»
-																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-															</Gedcom>
-															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-															 <GedcomValue tag="SOUR:DATA:TEXT" />
-														</Footnote>
-														<SetVar name="source_exist" value="1"/>
-													</RepeatTag>
-												</if>
-												<if condition="@DATE!=''">
-													<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
-												</if>
-												<if condition="@PLAC!=''">
-													<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
-												</if>
-											</Gedcom>
-											<Gedcom id="DEAT">
-												<if condition="$printPronoun=='true'">
-													<Text style="label1">  <var var="I18N::translate('She ')" /></Text>
-													<SetVar name="printPronoun" value="false" />
-												</if>
-												<SetVar name="printPeriod" value="true" />
-												<if condition="$birtExist=='true'">
-													<Text style="label1"> <var var="I18N::translate('and')" /></Text>
-												</if>
-												<Text style="label1"> <var var="I18N::translateContext('FEMALE', 'died')" /> </Text>
-												<if condition="$sources=='on'">
-													<RepeatTag tag="DEAT:SOUR">
-														<Footnote>
-															<Gedcom id="@SOUR">
-																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-																«<GedcomValue tag="TITL" />»
-																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-															</Gedcom>
-															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-															 <GedcomValue tag="SOUR:DATA:TEXT" />
-														</Footnote>
-														<SetVar name="source_exist" value="1"/>
-													</RepeatTag>
-												</if>
-												<if condition="@DATE!=''">
-													<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
-												</if>
-												<if condition="@PLAC!=''">
-													<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
-												</if>
-											</Gedcom>
-											<if condition="$printPeriod=='true'">
-												<Text style="label1">.</Text>
-												<SetVar name="printPronoun" value="true" />
-											</if>
-										</Gedcom>
-									</if>
-									<if condition="$gender=='female'">
-										<Gedcom id="@HUSB">
-											<SetVar name="printPronoun" value="true" />
-											<SetVar name="printPeriod" value="false" />
-											<SetVar name="birtExist" value="false" />
-											<Gedcom id="BIRT">
-												<SetVar name="printPeriod" value="true" />
-												<if condition="$printPronoun=='true'">
-													<Text style="label1">  <var var="I18N::translate('He was born')" /></Text>
-													<SetVar name="printPronoun" value="false" />
-												</if>
-												<SetVar name="birtExist" value="true" />
-												<if condition="$sources=='on'">
-													<RepeatTag tag="BIRT:SOUR">
-														<Footnote>
-															<Gedcom id="@SOUR">
-																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-																«<GedcomValue tag="TITL" />»
-																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-															</Gedcom>
-															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-															 <GedcomValue tag="SOUR:DATA:TEXT" />
-														</Footnote>
-														<SetVar name="source_exist" value="1"/>
-													</RepeatTag>
-												</if>
-												<if condition="@DATE!=''">
-													<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
-												</if>
-												<if condition="@PLAC!=''">
-													<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
-												</if>
-											</Gedcom>
-											<Gedcom id="DEAT">
-												<if condition="$printPronoun=='true'">
-													<Text style="label1">  <var var="I18N::translate('He ')" /></Text>
-													<SetVar name="printPronoun" value="true" />
-												</if>
-												<SetVar name="printPeriod" value="true" />
-												<if condition="$birtExist=='true'">
-													<Text style="label1"> <var var="I18N::translate('and')" /></Text>
-												</if>
-												<Text style="label1"> <var var="I18N::translateContext('MALE', 'died')" /> </Text>
-												<if condition="$sources=='on'">
-													<RepeatTag tag="DEAT:SOUR">
-														<Footnote>
-															<Gedcom id="@SOUR">
-																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
-																«<GedcomValue tag="TITL" />»
-																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
-															</Gedcom>
-															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
-															 <GedcomValue tag="SOUR:DATA:TEXT" />
-														</Footnote>
-														<SetVar name="source_exist" value="1"/>
-													</RepeatTag>
-												</if>
-												<if condition="@DATE!=''">
-													<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
-												</if>
-												<if condition="@PLAC!=''">
-													<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
-												</if>
-											</Gedcom>
-											<if condition="$printPeriod=='true'">
-												<Text style="label1">.</Text>
-												<SetVar name="printPronoun" value="true" />
-											</if>
-										</Gedcom>
-									</if>
+									<Gedcom id="@WIFE">
+										<!-- 妻子名字 -->
+										<TextBox  border="0" width="9" height="$person_heights" >
+											<Text style="name3">  <GetPersonName id="" /></Text>
+										</TextBox>
+									</Gedcom>
 								</if>
-							</Gedcom>
-						</RepeatTag>
-					</TextBox>
+							</if>
+							<!-- 女性信息打印 -->
+							<if condition="$gender=='female'">
+								<Gedcom id="MARR">
+									<SetVar name="marrExists" value="true" />
+									<if condition="$multmarrExists=='false'">
+										<TextBox  border="0" width="9" height="$person_heights" >
+											<Text style="label3">  丈夫</Text>
+										</TextBox>
+									</if>
+								</Gedcom>
+								<if condition="$marrExists=='true'">
+									<Gedcom id="@HUSB">
+										<!-- 老公 名字-->
+										<TextBox  border="0" width="9" height="$person_heights" >
+											<Text style="name3">  <GetPersonName id="" /></Text>
+										</TextBox>
+									</Gedcom>
+								</if>
+							</if>	
+							<SetVar name="multmarrExists" value="true" />
+						</Gedcom>
+					</RepeatTag>
 
+				
+				<SetVar name="personNumber" value="$personNumber + 1" />
+				</TextBox>
+				
+				<!-- 统计没有孩子的个人，如果有是TRUE，没有有是FALSE，一个没有孩子的就占一列 -->
+				<SetVar name="shifouyouhaizi1" value="false" />				
+					<!-- 统计孩子个数 -->
+					<SetVar name="numberOfChildren" value="0" />
 					<RepeatTag tag="FAMS">
 						<Gedcom id="@FAMS">
 							<if condition="@CHIL!=''">
-								<SetVar name="numberOfChildren" value="0" />
+								<SetVar name="shifouyouhaizi1" value="true" />
 								<RepeatTag tag="CHIL">
 									<Gedcom id="@CHIL">
-										<SetVar name="numberOfChildren" value="$numberOfChildren+1" />
+										<SetVar name="numberOfChildren" value="$numberOfChildren + 1" />
 									</Gedcom>
+								</RepeatTag>								
+							</if>
+						</Gedcom>
+					</RepeatTag>
+					
+					
+					
+					<!-- 如果有孩子，那肯定有直线下去 -->
+					<!-- 如果有多个孩子 -->
+					<!-- 如果下一代处理了一个，上一代的后代数目要减少一个 -->
+					<if condition="@generation==1">	
+						<SetVar name="numberOfChildren_gen1" value="$numberOfChildren" />
+						<!-- 第一个直接后代的线 -->
+						<if condition="$numberOfChildren > 0">
+						<!-- 就算有孩子，当小于已经显示的最大代数的时候，显示到孩子的竖线，如果是最下面一代，则不显示 -->
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_1_to_2_1_X1" y1="$L_1_to_2_1_Y1" x2="$L_1_to_2_1_X2" y2="$L_1_to_2_1_Y2" />
+								<!-- 设置下一代的第一个孩子没有处理标志 -->
+								<SetVar name="dofirstchild_gen1" value="false" />
+							</if>
+						</if>
+					</if>
+					<if condition="@generation==2">	
+						<SetVar name="numberOfChildren_gen2" value="$numberOfChildren" />
+						<!-- 设置上一代的第一个孩子处理标志 -->
+						<SetVar name="dofirstchild_gen1" value="true" />
+						<SetVar name="numberOfChildren_gen1" value="$numberOfChildren_gen1 - 1" />
+						
+						<!-- 第一个直接后代的线 -->						
+						<if condition="$numberOfChildren > 0">
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_2_to_3_1_X1" y1="$L_2_to_3_1_Y1" x2="$L_2_to_3_1_X2" y2="$L_2_to_3_1_Y2" />
+								<SetVar name="dofirstchild_gen2" value="false" />
+							</if>
+						</if>		
+							<!-- 画到父辈的线 -->
+						<Line x1="$L_1_to_2_2_X1" y1="100" x2="$L_1_to_2_2_X1" y2="110" />						
+					</if>
+					<if condition="@generation==3">	
+						<SetVar name="numberOfChildren_gen3" value="$numberOfChildren" />
+						<SetVar name="numberOfChildren_gen2" value="$numberOfChildren_gen2 - 1" />
+						<SetVar name="dofirstchild_gen2" value="true" />
+						<if condition="$numberOfChildren > 0">
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_3_to_4_1_X1" y1="$L_3_to_4_1_Y1" x2="$L_3_to_4_1_X2" y2="$L_3_to_4_1_Y2" />
+								<SetVar name="dofirstchild_gen3" value="false" />
+							</if>
+						</if>
+						<!-- 画到父辈的线 -->
+						<Line x1="$L_2_to_3_2_X1" y1="180" x2="$L_2_to_3_2_X1" y2="190" />												
+					</if>
+					<if condition="@generation==4">	
+						<SetVar name="numberOfChildren_gen4" value="$numberOfChildren" />
+						<SetVar name="numberOfChildren_gen3" value="$numberOfChildren_gen3 - 1" />
+						<SetVar name="dofirstchild_gen3" value="true" />
+						<if condition="$numberOfChildren > 0">
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_4_to_5_1_X1" y1="$L_4_to_5_1_Y1" x2="$L_4_to_5_1_X2" y2="$L_4_to_5_1_Y2" />
+								<SetVar name="dofirstchild_gen4" value="false" />
+							</if>
+						</if>
+						<Line x1="$L_3_to_4_2_X1" y1="260" x2="$L_3_to_4_2_X1" y2="270" />						
+					</if>
+					<if condition="@generation==5">						
+						<SetVar name="numberOfChildren_gen5" value="$numberOfChildren" />
+						<SetVar name="numberOfChildren_gen4" value="$numberOfChildren_gen4 - 1" />
+						<SetVar name="dofirstchild_gen4" value="true" />
+						<if condition="$numberOfChildren > 0">
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_5_to_6_1_X1" y1="$L_5_to_6_1_Y1" x2="$L_5_to_6_1_X2" y2="$L_5_to_6_1_Y2" />
+								<SetVar name="dofirstchild_gen5" value="false" />
+							</if>
+						</if>
+						<Line x1="$L_4_to_5_2_X1" y1="340" x2="$L_4_to_5_2_X1" y2="350" />						
+					</if>
+					<if condition="@generation==6">						
+						<SetVar name="numberOfChildren_gen6" value="$numberOfChildren" />
+						<SetVar name="numberOfChildren_gen5" value="$numberOfChildren_gen5 - 1" />
+						<SetVar name="dofirstchild_gen5" value="true" />
+						<if condition="$numberOfChildren > 0">
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_6_to_7_1_X1" y1="$L_6_to_7_1_Y1" x2="$L_6_to_7_1_X2" y2="$L_6_to_7_1_Y2" />
+								<SetVar name="dofirstchild_gen6" value="false" />
+							</if>
+						</if>
+						<Line x1="$L_5_to_6_2_X1" y1="420" x2="$L_5_to_6_2_X1" y2="430" />						
+					</if>
+					<if condition="@generation==7">						
+						<SetVar name="numberOfChildren_gen7" value="$numberOfChildren" />
+						<SetVar name="numberOfChildren_gen6" value="$numberOfChildren_gen6 - 1" />
+						<SetVar name="dofirstchild_gen6" value="true" />
+						<if condition="$numberOfChildren > 0">
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_7_to_8_1_X1" y1="$L_7_to_8_1_Y1" x2="$L_7_to_8_1_X2" y2="$L_7_to_8_1_Y2" />
+								<SetVar name="dofirstchild_gen7" value="false" />
+							</if>
+						</if>
+						<Line x1="$L_6_to_7_2_X1" y1="500" x2="$L_6_to_7_2_X1" y2="510" />						
+					</if>
+					<if condition="@generation==8">						
+						<SetVar name="numberOfChildren_gen8" value="$numberOfChildren" />
+						<SetVar name="numberOfChildren_gen7" value="$numberOfChildren_gen7 - 1" />
+						<SetVar name="dofirstchild_gen7" value="true" />
+						<if condition="$numberOfChildren > 0">
+							<if condition="$maxgen > @generation">
+								<Line x1="$L_8_to_9_1_X1" y1="$L_8_to_9_1_Y1" x2="$L_8_to_9_1_X2" y2="$L_8_to_9_1_Y2" />
+								<SetVar name="dofirstchild_gen8" value="false" />
+							</if>
+						</if>	
+						<Line x1="$L_7_to_8_2_X1" y1="580" x2="$L_7_to_8_2_X1" y2="590" />
+					</if>
+					<if condition="@generation==9">						
+						<SetVar name="numberOfChildren_gen8" value="$numberOfChildren_gen8 - 1" />						
+						<Line x1="$L_8_to_9_2_X1" y1="660" x2="$L_8_to_9_2_X1" y2="670" />
+					</if>
+					
+					
+				<SetVar name="shifouyouyiyilie" value="false" />	
+				<if condition="$shifouyouhaizi1=='false'">
+					<SetVar name="shifouyouyiyilie" value="true" />	
+				</if>
+				<!-- 如果有孩子，但他已经是要求显示的最大代了，也算占一列 -->
+				<if condition="$shifouyouhaizi1=='true'">					
+					<!-- 如果没有达到9代，但已经是选择的最大代数，也要移动竖线 -->
+					<if condition="@generation==$maxgen">
+						<SetVar name="shifouyouyiyilie" value="true" />						
+					</if>
+					
+				</if>
+				<if condition="$shifouyouyiyilie=='true'">
+					<SetVar name="xianshiduoshaolie" value="$xianshiduoshaolie + 1" />
+					<!-- 如果向右移了一位，则第一个后代的竖线也要移动 -->
+					<SetVar name="L_1_to_2_1_X1" value="$L_1_to_2_1_X1 + 60" />
+					<SetVar name="L_1_to_2_1_X2" value="$L_1_to_2_1_X1" />
+					<SetVar name="L_2_to_3_1_X1" value="$L_2_to_3_1_X1 + 60" />
+					<SetVar name="L_2_to_3_1_X2" value="$L_2_to_3_1_X1" />
+					<SetVar name="L_3_to_4_1_X1" value="$L_3_to_4_1_X1 + 60" />
+					<SetVar name="L_3_to_4_1_X2" value="$L_3_to_4_1_X1" />
+					<SetVar name="L_4_to_5_1_X1" value="$L_4_to_5_1_X1 + 60" />
+					<SetVar name="L_4_to_5_1_X2" value="$L_4_to_5_1_X1" />
+					<SetVar name="L_5_to_6_1_X1" value="$L_5_to_6_1_X1 + 60" />
+					<SetVar name="L_5_to_6_1_X2" value="$L_5_to_6_1_X1" />
+					<SetVar name="L_6_to_7_1_X1" value="$L_6_to_7_1_X1 + 60" />
+					<SetVar name="L_6_to_7_1_X2" value="$L_6_to_7_1_X1" />
+					<SetVar name="L_7_to_8_1_X1" value="$L_7_to_8_1_X1 + 60" />
+					<SetVar name="L_7_to_8_1_X2" value="$L_7_to_8_1_X1" />
+					<SetVar name="L_8_to_9_1_X1" value="$L_8_to_9_1_X1 + 60" />
+					<SetVar name="L_8_to_9_1_X2" value="$L_8_to_9_1_X1" />	
+					<!-- 如果没有到最右边一列，高于自己的代划线，低于自己的代右移，不要在其它位置处理横线 -->
+					<!-- 如果要一页显示所有9代，这里每行显示要足够多 -->
+					<if condition="$yiyeyihangzuiduo >= $xianshiduoshaolie">
+					
+						<if condition="@generation==2">	
+							<!-- 要判断长辈还有没有没有显示的后代，是否要画线 -->
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<!-- 假如自己家里多个兄弟，自己不是第一个，自己的父亲又是他们兄弟里的最后一个，或是爷爷也是最后一个，
+						这样情况就要看把所有直系长辈情况都看一次，正好是那一代家里最后一个的，要补个空,自己这一代不做处理,如果自己是同胞中最后一个
+						也要补个空，
+						 -->
+							<!-- <if condition="$numberOfChildren_gen1 == false">								
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if> -->
+						
+						<!-- 如果自己的代数小于于最大代数，说明自己没有后代，所以所有低于自己代数的人的横线都要右移一空 -->
+							<!-- <if condition="$maxgen > @generation">
+								
+							</if> -->
+							<if condition="$maxgen > @generation">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+							
+						</if>
+						<if condition="@generation==3">
+							
+							<if condition="$numberOfChildren_gen2 > 0">
+								<Line x1="$L_2_to_3_2_X1" y1="$L_2_to_3_2_Y1" x2="$L_2_to_3_2_X2" y2="$L_2_to_3_2_Y2" />
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>							
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<if condition="$numberOfChildren_gen2 == false">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 == false">
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							<if condition="$maxgen > @generation">
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+						</if>
+						<if condition="@generation==4">						
+							<if condition="$numberOfChildren_gen3 > 0">
+								<Line x1="$L_3_to_4_2_X1" y1="$L_3_to_4_2_Y1" x2="$L_3_to_4_2_X2" y2="$L_3_to_4_2_Y2" />						
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 > 0">
+								<Line x1="$L_2_to_3_2_X1" y1="$L_2_to_3_2_Y1" x2="$L_2_to_3_2_X2" y2="$L_2_to_3_2_Y2" />
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>							
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<if condition="$numberOfChildren_gen3 == false">
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 == false">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 == false">
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							<if condition="$maxgen > @generation">
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+						</if>
+						<if condition="@generation==5">						
+							<if condition="$numberOfChildren_gen4 > 0">
+								<Line x1="$L_4_to_5_2_X1" y1="$L_4_to_5_2_Y1" x2="$L_4_to_5_2_X2" y2="$L_4_to_5_2_Y2" />
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 > 0">
+								<Line x1="$L_3_to_4_2_X1" y1="$L_3_to_4_2_Y1" x2="$L_3_to_4_2_X2" y2="$L_3_to_4_2_Y2" />						
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 > 0">
+								<Line x1="$L_2_to_3_2_X1" y1="$L_2_to_3_2_Y1" x2="$L_2_to_3_2_X2" y2="$L_2_to_3_2_Y2" />
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<if condition="$numberOfChildren_gen4 == false">
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 == false">
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 == false">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 == false">
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							<if condition="$maxgen > @generation">
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+						</if>
+						<if condition="@generation==6">						
+							<if condition="$numberOfChildren_gen5 > 0">
+								<Line x1="$L_5_to_6_2_X1" y1="$L_5_to_6_2_Y1" x2="$L_5_to_6_2_X2" y2="$L_5_to_6_2_Y2" />
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen4 > 0">
+								<Line x1="$L_4_to_5_2_X1" y1="$L_4_to_5_2_Y1" x2="$L_4_to_5_2_X2" y2="$L_4_to_5_2_Y2" />
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 > 0">
+								<Line x1="$L_3_to_4_2_X1" y1="$L_3_to_4_2_Y1" x2="$L_3_to_4_2_X2" y2="$L_3_to_4_2_Y2" />						
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>							
+							<if condition="$numberOfChildren_gen2 > 0">
+								<Line x1="$L_2_to_3_2_X1" y1="$L_2_to_3_2_Y1" x2="$L_2_to_3_2_X2" y2="$L_2_to_3_2_Y2" />
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>							
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<if condition="$numberOfChildren_gen5 == false">
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen4 == false">
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 == false">
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 == false">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 == false">
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							<if condition="$maxgen > @generation">
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+						</if>
+						<if condition="@generation==7">						
+							<if condition="$numberOfChildren_gen6 > 0">
+								<Line x1="$L_6_to_7_2_X1" y1="$L_6_to_7_2_Y1" x2="$L_6_to_7_2_X2" y2="$L_6_to_7_2_Y2" />
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen5 > 0">						
+								<Line x1="$L_5_to_6_2_X1" y1="$L_5_to_6_2_Y1" x2="$L_5_to_6_2_X2" y2="$L_5_to_6_2_Y2" />
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />						
+							</if>
+							<if condition="$numberOfChildren_gen4 > 0">
+								<Line x1="$L_4_to_5_2_X1" y1="$L_4_to_5_2_Y1" x2="$L_4_to_5_2_X2" y2="$L_4_to_5_2_Y2" />
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 > 0">						
+								<Line x1="$L_3_to_4_2_X1" y1="$L_3_to_4_2_Y1" x2="$L_3_to_4_2_X2" y2="$L_3_to_4_2_Y2" />						
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 > 0">						
+								<Line x1="$L_2_to_3_2_X1" y1="$L_2_to_3_2_Y1" x2="$L_2_to_3_2_X2" y2="$L_2_to_3_2_Y2" />
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<if condition="$numberOfChildren_gen6 == false">
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen5 == false">
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen4 == false">
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 == false">
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 == false">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 == false">
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							<if condition="$maxgen > @generation">
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+						</if>
+						<if condition="@generation==8">						
+							<if condition="$numberOfChildren_gen7 > 0">
+								<Line x1="$L_7_to_8_2_X1" y1="$L_7_to_8_2_Y1" x2="$L_7_to_8_2_X2" y2="$L_7_to_8_2_Y2" />
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen6 > 0">
+								<Line x1="$L_6_to_7_2_X1" y1="$L_6_to_7_2_Y1" x2="$L_6_to_7_2_X2" y2="$L_6_to_7_2_Y2" />
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen5 > 0">
+								<Line x1="$L_5_to_6_2_X1" y1="$L_5_to_6_2_Y1" x2="$L_5_to_6_2_X2" y2="$L_5_to_6_2_Y2" />
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen4 > 0">
+								<Line x1="$L_4_to_5_2_X1" y1="$L_4_to_5_2_Y1" x2="$L_4_to_5_2_X2" y2="$L_4_to_5_2_Y2" />
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 > 0">
+								<Line x1="$L_3_to_4_2_X1" y1="$L_3_to_4_2_Y1" x2="$L_3_to_4_2_X2" y2="$L_3_to_4_2_Y2" />						
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 > 0">
+								<Line x1="$L_2_to_3_2_X1" y1="$L_2_to_3_2_Y1" x2="$L_2_to_3_2_X2" y2="$L_2_to_3_2_Y2" />
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>							
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<if condition="$numberOfChildren_gen7 == false">
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen6 == false">
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen5 == false">
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen4 == false">
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 == false">
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 == false">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 == false">
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							<if condition="$maxgen > @generation">
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+						</if>
+						<if condition="@generation==9">						
+							<if condition="$numberOfChildren_gen8 > 0">
+								<Line x1="$L_8_to_9_2_X1" y1="$L_8_to_9_2_Y1" x2="$L_8_to_9_2_X2" y2="$L_8_to_9_2_Y2" />
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen7 > 0">
+								<Line x1="$L_7_to_8_2_X1" y1="$L_7_to_8_2_Y1" x2="$L_7_to_8_2_X2" y2="$L_7_to_8_2_Y2" />
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen6 > 0">
+								<Line x1="$L_6_to_7_2_X1" y1="$L_6_to_7_2_Y1" x2="$L_6_to_7_2_X2" y2="$L_6_to_7_2_Y2" />
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen5 > 0">
+								<Line x1="$L_5_to_6_2_X1" y1="$L_5_to_6_2_Y1" x2="$L_5_to_6_2_X2" y2="$L_5_to_6_2_Y2" />
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen4 > 0">
+								<Line x1="$L_4_to_5_2_X1" y1="$L_4_to_5_2_Y1" x2="$L_4_to_5_2_X2" y2="$L_4_to_5_2_Y2" />
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3 > 0">
+								<Line x1="$L_3_to_4_2_X1" y1="$L_3_to_4_2_Y1" x2="$L_3_to_4_2_X2" y2="$L_3_to_4_2_Y2" />						
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2 > 0">
+								<Line x1="$L_2_to_3_2_X1" y1="$L_2_to_3_2_Y1" x2="$L_2_to_3_2_X2" y2="$L_2_to_3_2_Y2" />
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1 > 0">
+								<Line x1="$L_1_to_2_2_X1" y1="$L_1_to_2_2_Y1" x2="$L_1_to_2_2_X2" y2="$L_1_to_2_2_Y2" />
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+							
+							<if condition="$numberOfChildren_gen8==false">
+								<SetVar name="L_8_to_9_2_X1" value="$L_8_to_9_2_X2" />
+								<SetVar name="L_8_to_9_2_X2" value="$L_8_to_9_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen7==false">
+								<SetVar name="L_7_to_8_2_X1" value="$L_7_to_8_2_X2" />
+								<SetVar name="L_7_to_8_2_X2" value="$L_7_to_8_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen6==false">
+								<SetVar name="L_6_to_7_2_X1" value="$L_6_to_7_2_X2" />
+								<SetVar name="L_6_to_7_2_X2" value="$L_6_to_7_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen5==false">
+								<SetVar name="L_5_to_6_2_X1" value="$L_5_to_6_2_X2" />
+								<SetVar name="L_5_to_6_2_X2" value="$L_5_to_6_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen4==false">
+								<SetVar name="L_4_to_5_2_X1" value="$L_4_to_5_2_X2" />
+								<SetVar name="L_4_to_5_2_X2" value="$L_4_to_5_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen3==false">
+								<SetVar name="L_3_to_4_2_X1" value="$L_3_to_4_2_X2" />
+								<SetVar name="L_3_to_4_2_X2" value="$L_3_to_4_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen2==false">
+								<SetVar name="L_2_to_3_2_X1" value="$L_2_to_3_2_X2" />
+								<SetVar name="L_2_to_3_2_X2" value="$L_2_to_3_2_X2 + 60" />
+							</if>
+							<if condition="$numberOfChildren_gen1==false">
+								<SetVar name="L_1_to_2_2_X1" value="$L_1_to_2_2_X2" />
+								<SetVar name="L_1_to_2_2_X2" value="$L_1_to_2_2_X2 + 60" />
+							</if>
+						</if>
+					</if>
+				</if>
+				<!-- 处理个人与个人间的线条 -->
+				<!-- 存代数为下个人的上一个备用 -->
+				<SetVar name="generation_shangyidai" value="@generation" />
+			</Relatives>
+			
+			
+			
+			<SetVar name="personNumber" value="1" />
+			<SetVar name="childNumber" value="2" />
+			<SetVar name="generation" value="-1" />
+			<!-- <SetVar name="xinjianyiye" value="false" /> -->
+			<!-- <SetVar name="generation_everypage" value="-1" /> -->
+			<!-- 如果显示资源信息，就在树后面新建一页列出详细的说明 -->
+			<if condition="$sources == 'on'">
+			<!-- <if condition="$sources == 1"> -->
+				<NewPage/>
+				
+				<Relatives id="$pid" group="DescendancyFirstsunFirst" sortby="firstsonfirst" maxgen="$maxgen">
+				<!-- <Relatives id="$pid" group="descendants" sortby="generation" maxgen="$maxgen"> -->
+					<!-- <SetVar name="showPerson" value="F" /> -->
+					<!-- 这里改成所有人都显示，不管有没有结婚和孩子 -->
+					
+					<SetVar name="showPerson" value="T" />
+					<RepeatTag tag="FAMS">
+						<Gedcom id="@FAMS:@CHIL">
+							<SetVar name="showPerson" value="T" />
+						</Gedcom>
+					</RepeatTag>
+					<if condition="$showPerson=='T'">
+						<!-- <if condition="$generation!=@generation">						 -->
+							<!-- 侧边显示这页个人的代数 -->
+							
+							<SetVar name="generation" value="@generation" />
+							<!-- <SetVar name="xinjianyiye" value="true" /> -->
+							<!-- <Cell border="0" align="center" width="20" height="20" left="5" top="30" style="subheader">第 <var var="generation" /> 代</Cell> -->
+							<!-- <Cell border="0" align="center" width="20" height="20" left="1060" top="30" style="subheader">第 <var var="generation" /> 代</Cell> -->
+														
+						<!-- </if> -->
+					
+						<TextBox border="" width="20" height="50" left="5" style="subheader">	
+								<Text style="name">第 <var var="generation" /> 代</Text>						
+						</TextBox>
+						<TextBox border="" width="20" height="20" left="1060" style="subheader">	
+							<Text style="name">第 <var var="generation" /> 代</Text>
+						</TextBox>
+
+						<!-- <HighlightedImage left="45" width="60" /> -->
+						<HighlightedImage left="45" width="60" />
+						<!-- <HighlightedImage left="45" height="60" /> -->
+						<TextBox border="" width="25" height="40" left="125">
+							<!-- 个人此次显示的排列序号 -->
+							<Text style="name"><var var="personNumber" />.</Text>
+						</TextBox>
+						
+						<!-- <TextBox border="1" width="1000" height="40" newline="1"> -->
+						<TextBox border="" width="900" left="145" newline="1">
+							<!-- 显示名字 -->
+							<Text style="name"><GetPersonName id="" /> </Text>
+							<!-- 判断显示资料信息 -->
+							<if condition="$sources==1">
+								<!-- print level 1 sources -->
+								<RepeatTag tag="SOUR">
+									<Footnote>
+										<Gedcom id="@SOUR">
+											<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+											«<GedcomValue tag="TITL" />»
+											<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+										</Gedcom>
+										<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+										 <GedcomValue tag="SOUR:DATA:TEXT" />
+									</Footnote>
+									<SetVar name="source_exist" value="1"/>
 								</RepeatTag>
-
-								<TextBox height="20" left="25" newline="1">
-									<if condition="$numberOfChildren==1">
-										<Text style="label1"><var var="I18N::translate('Child of ')" /></Text>
-									</if>
-									<if condition="$numberOfChildren>1">
-										<Text style="label1"><var var="I18N::translate('Children of ')" /></Text>
-									</if>
-									<Text style="name"><GetPersonName id="@HUSB" /></Text>
-									<Text style="label1"> <var var="I18N::translate('and')" /> </Text>
-									<Text style="name"><GetPersonName id="@WIFE" /></Text>
-									<Text style="label1">:</Text>
-								</TextBox>
-
-								<SetVar name="familyChildNumber" value ="1" />
-								<RepeatTag tag="CHIL">
-									<Gedcom id="@CHIL">
-										<if condition="$familyChildNumber==1"><SetVar name="familyChildRoman" value="i" /></if>
-										<if condition="$familyChildNumber==2"><SetVar name="familyChildRoman" value="ii" /></if>
-										<if condition="$familyChildNumber==3"><SetVar name="familyChildRoman" value="iii" /></if>
-										<if condition="$familyChildNumber==4"><SetVar name="familyChildRoman" value="iv" /></if>
-										<if condition="$familyChildNumber==5"><SetVar name="familyChildRoman" value="v" /></if>
-										<if condition="$familyChildNumber==6"><SetVar name="familyChildRoman" value="vi" /></if>
-										<if condition="$familyChildNumber==7"><SetVar name="familyChildRoman" value="vii" /></if>
-										<if condition="$familyChildNumber==8"><SetVar name="familyChildRoman" value="viii" /></if>
-										<if condition="$familyChildNumber==9"><SetVar name="familyChildRoman" value="ix" /></if>
-										<if condition="$familyChildNumber==10"><SetVar name="familyChildRoman" value="x" /></if>
-										<if condition="$familyChildNumber==11"><SetVar name="familyChildRoman" value="xi" /></if>
-										<if condition="$familyChildNumber==12"><SetVar name="familyChildRoman" value="xii" /></if>
-										<if condition="$familyChildNumber==13"><SetVar name="familyChildRoman" value="xiii" /></if>
-										<if condition="$familyChildNumber==14"><SetVar name="familyChildRoman" value="xiv" /></if>
-										<if condition="$familyChildNumber==15"><SetVar name="familyChildRoman" value="xv" /></if>
-										<if condition="$familyChildNumber==16"><SetVar name="familyChildRoman" value="xvi" /></if>
-										<if condition="$familyChildNumber==17"><SetVar name="familyChildRoman" value="xvii" /></if>
-										<if condition="$familyChildNumber==18"><SetVar name="familyChildRoman" value="xviii" /></if>
-										<if condition="$familyChildNumber==19"><SetVar name="familyChildRoman" value="xix" /></if>
-										<if condition="$familyChildNumber==20"><SetVar name="familyChildRoman" value="xx" /></if>
-										<SetVar name="showChildNumber" value="false" />
-										<RepeatTag tag="FAMS">
-											<Gedcom id="@FAMS:@CHIL">
-												<SetVar name="showChildNumber" value="true" />
+								<!-- print level 2 sources attached to NAME -->
+								<!-- 名字的资源信息 -->
+								<RepeatTag tag="NAME:SOUR">
+									<Footnote>
+										<Gedcom id="@SOUR">
+											<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+											«<GedcomValue tag="TITL" />»
+											<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+										</Gedcom>
+										<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+										 <GedcomValue tag="SOUR:DATA:TEXT" />
+									</Footnote>
+									<SetVar name="source_exist" value="1" />
+								</RepeatTag>
+							</if>
+							<SetVar name="printPeriod" value="false" />
+							<SetVar name="gender" value="male" />
+							<!-- 判断是不是女性 -->
+							<if condition="@SEX=='F'">
+								<SetVar name="gender" value="female" />
+							</if>
+							<Gedcom id="@FAMC">		
+								<Text style="label1"> （父亲：</Text>
+								<!-- 爸爸的名字 -->
+								<Text style="name"> <GetPersonName id="@HUSB" /> 、</Text>
+								<Gedcom id="@HUSB">
+									<Gedcom id="@FAMS:@WIFE">
+										<Text style="label1"> 母亲：</Text>
+									</Gedcom>
+								</Gedcom>
+								<!-- 妈妈的名字 -->
+								<Text style="name"> <GetPersonName id="@WIFE" /> </Text>
+								<Text style="label1"> ）</Text>
+							</Gedcom>
+							<SetVar name="birtExists" value="false" />
+							<Gedcom id="BIRT">
+								<SetVar name="birtExists" value="true" />
+								<SetVar name="printPeriod" value="true" />
+								
+								<!-- 判断显示出生信息 -->
+								<if condition="$sources==1">
+									<RepeatTag tag="BIRT:SOUR">
+										<Footnote>
+											<Gedcom id="@SOUR">
+												<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+												«<GedcomValue tag="TITL" />»
+												<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
 											</Gedcom>
-										</RepeatTag>
-										<TextBox left="25" height="20" width="25">
-											<if condition="$showChildNumber=='true'">
-												<Text style="name"><var var="childNumber" />.</Text>
-												<SetVar name="childNumber" value="$childNumber + 1" />
+											<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+											 <GedcomValue tag="SOUR:DATA:TEXT" />
+										</Footnote>
+										<SetVar name="source_exist" value="1"/>
+									</RepeatTag>
+								</if>
+								<if condition="@DATE!=''">
+									<!-- 显示出生时间  -->
+									<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
+								</if>
+								<if condition="@PLAC!=''">
+									<!-- 出生地点 -->
+									<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
+								</if>
+								<!-- 显示出生两字  -->
+								<if condition="$gender=='male'">
+									<Text style="label1"> <var var="I18N::translateContext('MALE', 'was born')" /> </Text>
+								</if>
+								<if condition="$gender=='female'">
+									<Text style="label1"> <var var="I18N::translateContext('FEMALE', 'was born')" /> </Text>
+								</if>
+							</Gedcom>
+							<Gedcom id="DEAT">
+								<SetVar name="printPeriod" value="true" />
+								<if condition="$birtExists=='true'">								
+									<!-- <Text style="label1"> <var var="I18N::translate('and')" /></Text> -->
+									<Text style="label1"> <var var="," /></Text>
+								</if>
+								
+								<!-- 死亡相关信息 -->
+								<if condition="$sources==1">
+									<RepeatTag tag="DEAT:SOUR">
+										<Footnote>
+											<Gedcom id="@SOUR">
+												<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+												«<GedcomValue tag="TITL" />»
+												<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+											</Gedcom>
+											<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+											 <GedcomValue tag="SOUR:DATA:TEXT" />
+										</Footnote>
+										<SetVar name="source_exist" value="1"/>
+									</RepeatTag>
+								</if>
+								<if condition="@DATE!=''">
+									<!-- 死亡时间相关信息 -->
+									<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
+								</if>
+								<if condition="@PLAC!=''">
+									<!-- 死亡地相关信息 -->
+									<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
+								</if>
+								<if condition="$gender=='male'">
+									<Text style="label1"> <var var="I18N::translateContext('MALE', 'died')" /> </Text>
+								</if>
+								<if condition="$gender=='female'">
+									<Text style="label1"> <var var="I18N::translateContext('FEMALE', 'died')" /> </Text>
+								</if>
+							</Gedcom>
+							<SetVar name="printPronoun" value="false" />
+							<!-- 与配偶的分隔符 -->
+							<if condition="$printPeriod=='true'">
+								<Text style="label1">.</Text>
+								<SetVar name="printPronoun" value="true" />
+							</if>
+							<RepeatTag tag="FAMS">
+								<SetVar name="printPeriod" value="false" />
+								<Gedcom id="@FAMS">
+									<SetVar name="marrExists" value="false" />
+									<if condition="$gender=='male'">
+										<Gedcom id="MARR">
+											<SetVar name="marrExists" value="true" />
+											<!-- 娶了 -->
+											<if condition="$printPronoun=='true'" >
+												<!-- <Text style="label1">  <var var="I18N::translate('He married')" /> </Text> -->
+												<Text style="label1">  <var var="娶了" /> </Text>
 											</if>
-										</TextBox>
-
-										<TextBox height="20" newline="1">
-											<Text style="label1"><var var="familyChildRoman" /></Text>
-											<Text style="name">  <GetPersonName id="" /> </Text>
-											<if condition="$sources=='on'">
-												<!-- print level 1 sources -->
-												<RepeatTag tag="SOUR">
+											<!-- 娶了 -->
+											<if condition="$printPronoun=='false'" >
+												<!-- <Text style="label1">  <var var="I18N::translateContext('MALE', 'married')" /> </Text> -->
+												<Text style="label1">  <var var="娶了" /> </Text>
+											</if>
+											<SetVar name="printPeriod" value="true" />
+											<if condition="$sources==1">
+												<RepeatTag tag="MARR:SOUR">
 													<Footnote>
 														<Gedcom id="@SOUR">
 															<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
@@ -541,8 +1682,78 @@
 													</Footnote>
 													<SetVar name="source_exist" value="1"/>
 												</RepeatTag>
-												<!-- print level 2 sources attached to NAME -->
-												<RepeatTag tag="NAME:SOUR">
+											</if>
+										</Gedcom>
+										<if condition="$marrExists=='true'">
+											<Gedcom id="@WIFE">
+											
+											<!-- 妻子名字 -->
+												<Text style="name"> <GetPersonName id="" /> </Text>
+												<HighlightedImage  width="50" />
+												<if condition="$sources==1">
+													<!-- print level 1 sources -->
+													<RepeatTag tag="SOUR">
+														<Footnote>
+															<Gedcom id="@SOUR">
+																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																«<GedcomValue tag="TITL" />»
+																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+															</Gedcom>
+															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+															 <GedcomValue tag="SOUR:DATA:TEXT" />
+														</Footnote>
+														<SetVar name="source_exist" value="1"/>
+													</RepeatTag>
+													<!-- print level 2 sources attached to NAME -->
+													<RepeatTag tag="NAME:SOUR">
+														<Footnote>
+															<Gedcom id="@SOUR">
+																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																«<GedcomValue tag="TITL" />»
+																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+															</Gedcom>
+															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+															 <GedcomValue tag="SOUR:DATA:TEXT" />
+														</Footnote>
+														<SetVar name="source_exist" value="1" />
+													</RepeatTag>
+												</if>
+												<Gedcom id="@FAMC">
+													<Text style="name"> (</Text>
+													<!-- 妻子爸爸的名字 -->
+													<Text style="name"> <GetPersonName id="@HUSB" /> </Text>
+													<Gedcom id="@HUSB">
+														<Gedcom id="@FAMS:@WIFE">
+															<!-- <Text style="label1"> <var var="I18N::translate('and')" /></Text> -->
+															<Text style="label1"> <var var="和" /></Text>
+														</Gedcom>
+													</Gedcom>
+													<!-- 妻子妈妈的名字 -->
+													<Text style="name"> <GetPersonName id="@WIFE" /> </Text>
+													<!-- 妻子是谁的女儿 -->
+													<Text style="label1"> 的<var var="I18N::translate('daughter of')" /></Text>
+													<Text style="name"> )</Text>
+												</Gedcom>
+											</Gedcom>
+										</if>
+									</if>
+									<!-- 女性信息打印 -->
+									<if condition="$gender=='female'">
+										<Gedcom id="MARR">
+											<SetVar name="marrExists" value="true" />
+											<!-- 嫁给了 -->
+											<if condition="$printPronoun=='true'" >
+												<!-- <Text style="label1">  <var var="I18N::translate('She married')" /> </Text> -->
+												<Text style="label1">  <var var="嫁给了" /> </Text>
+											</if>
+											<if condition="$printPronoun=='false'" >
+											<!-- 嫁给了 -->
+												<!-- <Text style="label1"> <var var="I18N::translateContext('FEMALE', 'married')" /> </Text> -->
+												<Text style="label1"> <var var="嫁给了" /> </Text>
+											</if>
+											<SetVar name="printPeriod" value="true" />
+											<if condition="$sources==1">
+												<RepeatTag tag="MARR:SOUR">
 													<Footnote>
 														<Gedcom id="@SOUR">
 															<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
@@ -552,59 +1763,408 @@
 														<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
 														 <GedcomValue tag="SOUR:DATA:TEXT" />
 													</Footnote>
-													<SetVar name="source_exist" value="1" />
+													<SetVar name="source_exist" value="1"/>
 												</RepeatTag>
-												<Text style="label1"> </Text>
 											</if>
-											<Gedcom id="BIRT">
-												<Text style="label1"> <var var="I18N::translate('Birth')" />: <GedcomValue tag="DATE" level="2"/>  <GedcomValue tag="PLAC" level="2"/></Text>
-											</Gedcom>
-											<SetVar name="showMarraige" value="T" />
-											<RepeatTag tag="FAMS">
-												<Gedcom id="@FAMS:@CHIL">
-												<SetVar name="showMarraige" value="F" />
-												</Gedcom>
-											</RepeatTag>
-											<if condition="$showMarraige=='T'">
-												<SetVar name="gender" value="male" />
-												<if condition="@SEX=='F'">
-													<SetVar name="gender" value="female" />
+										</Gedcom>
+										<if condition="$marrExists=='true'">
+											<Gedcom id="@HUSB">
+												<!-- 老公 名字-->
+												<Text style="name"> <GetPersonName id="" /> </Text>
+												<HighlightedImage  width="50" />
+												<if condition="$sources==1">
+													<!-- print level 1 sources -->
+													<RepeatTag tag="SOUR">
+														<Footnote>
+															<Gedcom id="@SOUR">
+																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																«<GedcomValue tag="TITL" />»
+																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+															</Gedcom>
+															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+															 <GedcomValue tag="SOUR:DATA:TEXT" />
+														</Footnote>
+														<SetVar name="source_exist" value="1"/>
+													</RepeatTag>
+													<!-- print level 2 sources attached to NAME -->
+													<RepeatTag tag="NAME:SOUR">
+														<Footnote>
+															<Gedcom id="@SOUR">
+																<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																«<GedcomValue tag="TITL" />»
+																<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+															</Gedcom>
+															<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+															 <GedcomValue tag="SOUR:DATA:TEXT" />
+														</Footnote>
+														<SetVar name="source_exist" value="1" />
+													</RepeatTag>
 												</if>
-												<RepeatTag tag="FAMS">
-													<Gedcom id="@FAMS">
-														<Text style="label1"> <var var="I18N::translate('Marriage')" />: </Text>
-														<if condition="$gender=='male'">
-															<Text style="name"><GetPersonName id="@WIFE" /></Text>
-														</if>
-														<if condition="$gender=='female'">
-															<Text style="name"><GetPersonName id="@HUSB" /></Text>
-														</if>
-														<Gedcom id="MARR">
-															<if condition="@DATE!=''">
-																<Text style="label1">, <GedcomValue tag="DATE" level="2" /></Text>
-															</if>
-															<if condition="@PLAC!=''">
-																<Text style="label1">, <GedcomValue tag="PLAC" level="2" /></Text>
-															</if>
+												<Gedcom id="@FAMC">
+													<Text style="name"> (</Text>
+													<!-- 老公的爸爸 -->
+													<Text style="name"> <GetPersonName id="@HUSB" /></Text>
+													<Gedcom id="@HUSB">
+														<Gedcom id="@FAMS:@WIFE">
+															<!-- <Text style="label1"> <var var="I18N::translate('and')" /></Text> -->
+															<Text style="label1"> <var var="和" /></Text>
 														</Gedcom>
 													</Gedcom>
-												</RepeatTag>
-											</if>
-											<Gedcom id="DEAT">
-												<Text style="label1"> <var var="I18N::translate('Death')" />: <GedcomValue tag="DATE" level="2"/> <GedcomValue tag="PLAC" level="2"/></Text>
+													<!-- 老公的妈妈 -->
+													<Text style="name"> <GetPersonName id="@WIFE" /></Text>
+													<!-- 谁的孩子 -->
+													<Text style="label1"> 的<var var="I18N::translate('son of')" /></Text>
+													<Text style="name"> )</Text>
+												</Gedcom>
 											</Gedcom>
-										</TextBox>
+										</if>
+									</if>
+									<Gedcom id="MARR">
+										<Text style="label1"> <var var=" " /></Text>
+										<if condition="@DATE!=''">
+											<!-- 死的时间 -->
+											<SetVar name="printPeriod" value="true" />
+											<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2"/></Text>
+										</if>
+										<if condition="@PLAC!=''">
+											<!-- 死的地点 -->
+											<SetVar name="printPeriod" value="true" />
+											<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2"/></Text>
+										</if>
 									</Gedcom>
-									<SetVar name="familyChildNumber" value="$familyChildNumber+1" />
+									<!-- 是否打印句号 -->
+									<if condition="$printPeriod=='true'">
+										<Text style="label1">.</Text>
+										<SetVar name="printPronoun" value="true" />
+									</if>
+									<!-- 配偶的信息 -->
+									<if condition="$marrExists=='true'">
+										<if condition="$gender=='male'">
+											<Gedcom id="@WIFE">
+												<SetVar name="printPeriod" value="false" />
+												<SetVar name="birtExist" value="false" />
+												<SetVar name="printPronoun" value="true" />
+												<Gedcom id="BIRT">													
+													<SetVar name="birtExist" value="true" />
+													<if condition="$sources==1">
+														<RepeatTag tag="BIRT:SOUR">
+															<Footnote>
+																<Gedcom id="@SOUR">
+																	<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																	«<GedcomValue tag="TITL" />»
+																	<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+																</Gedcom>
+																<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+																 <GedcomValue tag="SOUR:DATA:TEXT" />
+															</Footnote>
+															<SetVar name="source_exist" value="1"/>
+														</RepeatTag>
+													</if>
+													<if condition="$printPronoun=='true'">
+														<SetVar name="printPeriod" value="true" />
+														<!-- 出生 -->
+														<Text style="label1">  <var var="I18N::translate('She was born')" /></Text>
+														<SetVar name="printPronoun" value="false" />
+													</if>
+													<if condition="@DATE!=''">
+														<!-- 出生时间 -->
+														<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
+													</if>
+													<if condition="@PLAC!=''">
+														<!-- 出生地点 -->
+														<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
+													</if>
+													
+												</Gedcom>
+												<Gedcom id="DEAT">
+													<if condition="$printPronoun=='true'">
+														<!-- 她 -->
+														<Text style="label1">  <var var="I18N::translate('She ')" /></Text>
+														<SetVar name="printPronoun" value="false" />
+													</if>
+													<SetVar name="printPeriod" value="true" />
+													<if condition="$birtExist=='true'">
+														<!-- 和-->
+														<!-- <Text style="label1"> <var var="I18N::translate('and')" /></Text> -->
+														<Text style="label1"> <var var="和" /></Text>
+													</if>
+													
+													<if condition="$sources==1">
+														<RepeatTag tag="DEAT:SOUR">
+															<Footnote>
+																<Gedcom id="@SOUR">
+																	<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																	«<GedcomValue tag="TITL" />»
+																	<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+																</Gedcom>
+																<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+																 <GedcomValue tag="SOUR:DATA:TEXT" />
+															</Footnote>
+															<SetVar name="source_exist" value="1"/>
+														</RepeatTag>
+													</if>
+													<if condition="@DATE!=''">
+														<!-- 死亡时间 -->
+														<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
+													</if>
+													<if condition="@PLAC!=''">
+														<!-- 死亡地点 -->
+														<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
+													</if>
+													<!-- 死亡 -->
+													<Text style="label1"> <var var="I18N::translateContext('FEMALE', 'died')" /> </Text>
+												</Gedcom>
+												<if condition="$printPeriod=='true'">
+													<Text style="label1">.</Text>
+													<SetVar name="printPronoun" value="true" />
+												</if>
+											</Gedcom>
+										</if>
+										<!-- 如果是女性，打印老公信息 -->
+										<if condition="$gender=='female'">
+											<Gedcom id="@HUSB">
+												<SetVar name="printPronoun" value="true" />
+												<SetVar name="printPeriod" value="false" />
+												<SetVar name="birtExist" value="false" />
+												<Gedcom id="BIRT">
+													<SetVar name="printPeriod" value="true" />													
+													<SetVar name="birtExist" value="true" />
+													<if condition="$sources==1">
+														<RepeatTag tag="BIRT:SOUR">
+															<Footnote>
+																<Gedcom id="@SOUR">
+																	<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																	«<GedcomValue tag="TITL" />»
+																	<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+																</Gedcom>
+																<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+																 <GedcomValue tag="SOUR:DATA:TEXT" />
+															</Footnote>
+															<SetVar name="source_exist" value="1"/>
+														</RepeatTag>
+													</if>
+													<if condition="$printPronoun=='true'">
+														<!-- 出生 -->
+														<Text style="label1">  <var var="I18N::translate('He was born')" /></Text>
+														<SetVar name="printPronoun" value="false" />
+													</if>
+													<if condition="@DATE!=''">
+														<!-- 出生时间 -->
+														<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
+													</if>
+													<if condition="@PLAC!=''">
+														<!-- 出生地 -->
+														<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
+													</if>
+													
+												</Gedcom>
+												<Gedcom id="DEAT">
+													<if condition="$printPronoun=='true'">
+														<!-- 他 -->
+														<Text style="label1">  <var var="I18N::translate('He ')" /></Text>
+														<SetVar name="printPronoun" value="true" />
+													</if>
+													<SetVar name="printPeriod" value="true" />
+													<if condition="$birtExist=='true'">
+														<!-- 和 -->
+														<!-- <Text style="label1"> <var var="I18N::translate('and')" /></Text> -->
+														<Text style="label1"> <var var="和" /></Text>
+													</if>
+													
+													<if condition="$sources==1">
+														<RepeatTag tag="DEAT:SOUR">
+															<Footnote>
+																<Gedcom id="@SOUR">
+																	<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																	«<GedcomValue tag="TITL" />»
+																	<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+																</Gedcom>
+																<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+																 <GedcomValue tag="SOUR:DATA:TEXT" />
+															</Footnote>
+															<SetVar name="source_exist" value="1"/>
+														</RepeatTag>
+													</if>
+													<if condition="@DATE!=''">
+														<!-- 死亡时间 -->
+														<Text style="label1"> <var var=" " /> <GedcomValue tag="DATE" level="2" /></Text>
+													</if>
+													<if condition="@PLAC!=''">
+														<!-- 死亡地点 -->
+														<Text style="label1"> <var var="I18N::translate(' in ')" /> <GedcomValue tag="PLAC" level="2" /></Text>
+													</if>
+													<!-- 死亡 -->
+													<Text style="label1"> <var var="I18N::translateContext('MALE', 'died')" /> </Text>
+												</Gedcom>
+												<if condition="$printPeriod=='true'">
+													<Text style="label1">.</Text>
+													<SetVar name="printPronoun" value="true" />
+												</if>
+											</Gedcom>
+										</if>
+									</if>
+								</Gedcom>
+							</RepeatTag>
+							
+							<if condition="@NOTE!=''">
+								<RepeatTag tag="NOTE">
+									<Text style="name">           <GetPersonName id="" /> 记事： </Text>
+									<Text style="label1"> <var var=" " /> <GedcomValue tag="NOTE"/>；</Text>
+									<!-- <Cell bgcolor="$fbbgcolor" border="1" newline="1" style="text" tcolor="$tcolor" width="$width"><GedcomValue tag="NOTE"/></Cell> -->
 								</RepeatTag>
 							</if>
-						</Gedcom>
-					</RepeatTag>
-					<SetVar name="personNumber" value="$personNumber + 1" />
-					<TextBox height="10" newline="1" padding="0"/>
-				</if>
-			</Relatives>
+						</TextBox>	
+							<!-- 编写孩子信息 -->
+							<TextBox height="10" newline="1" padding="0"/>
+							
+							<RepeatTag tag="FAMS">
+								<Gedcom id="@FAMS">
+									<if condition="@CHIL!=''">
+										<SetVar name="numberOfChildren" value="0" />
+										<RepeatTag tag="CHIL">
+											<Gedcom id="@CHIL">
+												<SetVar name="numberOfChildren" value="$numberOfChildren+1" />
+											</Gedcom>
+										</RepeatTag>
+
+										<TextBox height="20" left="155" newline="1">
+											
+											<Text style="name"><GetPersonName id="@HUSB" /></Text>
+											<!-- <Text style="label1"> <var var="I18N::translate('and')" /> </Text> -->
+											<Text style="label1"> <var var="和" /> </Text>
+											<Text style="name"><GetPersonName id="@WIFE" /> </Text>
+											<if condition="$numberOfChildren==1">
+												<Text style="label1">的<var var="I18N::translate('Child of ')" /></Text>
+											</if>
+											<if condition="$numberOfChildren>1">
+												<Text style="label1">的<var var="I18N::translate('Children of ')" /></Text>
+											</if>
+											<Text style="label1">:</Text>
+										</TextBox>
+
+										<SetVar name="familyChildNumber" value ="1" />
+										<RepeatTag tag="CHIL">
+											<Gedcom id="@CHIL">
+												<if condition="$familyChildNumber==1"><SetVar name="familyChildRoman" value="i" /></if>
+												<if condition="$familyChildNumber==2"><SetVar name="familyChildRoman" value="ii" /></if>
+												<if condition="$familyChildNumber==3"><SetVar name="familyChildRoman" value="iii" /></if>
+												<if condition="$familyChildNumber==4"><SetVar name="familyChildRoman" value="iv" /></if>
+												<if condition="$familyChildNumber==5"><SetVar name="familyChildRoman" value="v" /></if>
+												<if condition="$familyChildNumber==6"><SetVar name="familyChildRoman" value="vi" /></if>
+												<if condition="$familyChildNumber==7"><SetVar name="familyChildRoman" value="vii" /></if>
+												<if condition="$familyChildNumber==8"><SetVar name="familyChildRoman" value="viii" /></if>
+												<if condition="$familyChildNumber==9"><SetVar name="familyChildRoman" value="ix" /></if>
+												<if condition="$familyChildNumber==10"><SetVar name="familyChildRoman" value="x" /></if>
+												<if condition="$familyChildNumber==11"><SetVar name="familyChildRoman" value="xi" /></if>
+												<if condition="$familyChildNumber==12"><SetVar name="familyChildRoman" value="xii" /></if>
+												<if condition="$familyChildNumber==13"><SetVar name="familyChildRoman" value="xiii" /></if>
+												<if condition="$familyChildNumber==14"><SetVar name="familyChildRoman" value="xiv" /></if>
+												<if condition="$familyChildNumber==15"><SetVar name="familyChildRoman" value="xv" /></if>
+												<if condition="$familyChildNumber==16"><SetVar name="familyChildRoman" value="xvi" /></if>
+												<if condition="$familyChildNumber==17"><SetVar name="familyChildRoman" value="xvii" /></if>
+												<if condition="$familyChildNumber==18"><SetVar name="familyChildRoman" value="xviii" /></if>
+												<if condition="$familyChildNumber==19"><SetVar name="familyChildRoman" value="xix" /></if>
+												<if condition="$familyChildNumber==20"><SetVar name="familyChildRoman" value="xx" /></if>
+												<SetVar name="showChildNumber" value="false" />
+												<!-- <RepeatTag tag="FAMS">
+													<Gedcom id="@FAMS:@CHIL">
+														<SetVar name="showChildNumber" value="true" />
+													</Gedcom>
+												</RepeatTag>
+												<TextBox left="165" height="20" width="25" >
+													<if condition="$showChildNumber=='true'">
+														<Text style="name"><var var="childNumber" />.</Text>
+														<SetVar name="childNumber" value="$childNumber + 1" />
+													</if>
+												</TextBox> -->
+
+												<TextBox height="20" left="155" newline="1">
+													<Text style="label1"><var var="familyChildRoman" /></Text>
+													<Text style="name">  <GetPersonName id="" /> </Text>
+													<if condition="$sources==1">
+														
+														<RepeatTag tag="SOUR">
+															<Footnote>
+																<Gedcom id="@SOUR">
+																	<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																	«<GedcomValue tag="TITL" />»
+																	<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+																</Gedcom>
+																<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+																 <GedcomValue tag="SOUR:DATA:TEXT" />
+															</Footnote>
+															<SetVar name="source_exist" value="1"/>
+														</RepeatTag>
+														
+														<RepeatTag tag="NAME:SOUR">
+															<Footnote>
+																<Gedcom id="@SOUR">
+																	<if condition="@AUTH!=''"><GedcomValue tag="AUTH" />, </if>
+																	«<GedcomValue tag="TITL" />»
+																	<if condition="@PUBL!=''"> (<GedcomValue tag="PUBL" />)</if>
+																</Gedcom>
+																<if condition="@PAGE!=''">: <GedcomValue tag="SOUR:PAGE" /></if>
+																 <GedcomValue tag="SOUR:DATA:TEXT" />
+															</Footnote>
+															<SetVar name="source_exist" value="1" />
+														</RepeatTag>
+														<Text style="label1"> </Text> 
+													</if>
+													<Gedcom id="BIRT">
+														<Text style="label1"> <var var="I18N::translate('Birth')" />: <GedcomValue tag="DATE" level="2"/>  <GedcomValue tag="PLAC" level="2"/></Text>
+													</Gedcom>
+													<SetVar name="showMarraige" value="T" />
+													<RepeatTag tag="FAMS">
+														<Gedcom id="@FAMS:@CHIL">
+														<SetVar name="showMarraige" value="F" />
+														</Gedcom>
+													</RepeatTag>
+													<if condition="$showMarraige=='T'">
+														<SetVar name="gender" value="male" />
+														<if condition="@SEX=='F'">
+															<SetVar name="gender" value="female" />
+														</if>
+														<RepeatTag tag="FAMS">
+															<Gedcom id="@FAMS">
+																<Text style="label1"> <var var="I18N::translate('Marriage')" />: </Text>
+																<if condition="$gender=='male'">
+																	<Text style="name"><GetPersonName id="@WIFE" /></Text>
+																</if>
+																<if condition="$gender=='female'">
+																	<Text style="name"><GetPersonName id="@HUSB" /></Text>
+																</if>
+																<Gedcom id="MARR">
+																	<if condition="@DATE!=''">
+																		<Text style="label1">, <GedcomValue tag="DATE" level="2" /></Text>
+																	</if>
+																	<if condition="@PLAC!=''">
+																		<Text style="label1">, <GedcomValue tag="PLAC" level="2" /></Text>
+																	</if>
+																</Gedcom>
+															</Gedcom>
+														</RepeatTag>
+													</if>
+													<Gedcom id="DEAT">
+														<Text style="label1"> <var var="I18N::translate('Death')" />: <GedcomValue tag="DATE" level="2"/> <GedcomValue tag="PLAC" level="2"/></Text>
+													</Gedcom>
+												</TextBox>
+											</Gedcom>
+											<SetVar name="familyChildNumber" value="$familyChildNumber+1" />
+										</RepeatTag>
+									</if>
+								</Gedcom>
+							</RepeatTag>
+						
+
+						
+						<SetVar name="personNumber" value="$personNumber + 1" />
+						<TextBox height="10" newline="1" padding="0"/>
+					</if>
+					
+				</Relatives>
+			</if>
 			<!-- if the sources were on, print the source citations as footnotes -->
+			<!-- 如果有一些资料单独列出来 -->
 			<if condition="$source_exist==1">
 				<NewPage/>
 				<TextBox newline="1">
@@ -612,9 +2172,14 @@
 					<FootnoteTexts />
 				</TextBox>
 			</if>
-		</Body>
-		<Footer>
-			<Cell align="rightrtl" newline="1" style="date"><Now /></Cell>
+		</Body>	
+		<!-- 好像FOOTER这个实现有点问题 -->
+		<Footer>  
+			<!-- <Line x1="23" y1="287" x2="1160" y2="287" /> -->
+			<Cell align="rightrtl" newline="1" style="date"><var var="I18N::translate('第')" /> <PageNum /> <var var="I18N::translate('页/共 ')" /><TotalPages /><var var="I18N::translate(' 页,    生成时间：')" />   <Now />   </Cell>
+			<!-- <Cell align="rightrtl" newline="1" style="date"><var var="I18N::translate('第')" /> <PageNum /> <var var="I18N::translate('页/共 ')" /><TotalPages /><var var="I18N::translate(' 页,    生成时间：')" />   <Now />   </Cell> -->
+			<!-- <Cell align="rightrtl" newline="0" style="pagenum"><var var="I18N::translate('页数')" /> <PageNum /> <var var="I18N::translate('/')" /> <TotalPages /></Cell> -->
 		</Footer>
+		
 	</Doc>
 </Report>

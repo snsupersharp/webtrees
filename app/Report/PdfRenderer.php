@@ -340,6 +340,12 @@ class PdfRenderer extends AbstractRenderer
 		$this->tcpdf->setY($this->tcpdf->getPageHeight()-$this->footer_margin-55);
 		$this->footer();
 		$this->tcpdf->setY($this->breakPageHeaderHeight);
+		if ($this->title == '后代图') {
+				// $this->tcpdf->setY($this->breakPageHeaderHeight);
+				$this->tcpdf->setY(35);
+			}else{
+				$this->tcpdf->setY($this->breakPageHeaderHeight);
+		}
     }
 
     /**
@@ -360,7 +366,13 @@ class PdfRenderer extends AbstractRenderer
 			// $this->tcpdf->setY($this->tcpdf->getPageHeight() - 75);
 			$this->tcpdf->setY($this->tcpdf->getPageHeight()-$this->footer_margin-55);
 			$this->footer();
-			$this->tcpdf->setY($this->breakPageHeaderHeight);
+			// $this->tcpdf->setY($this->breakPageHeaderHeight);
+			if ($this->title == '后代图') {
+				// $this->tcpdf->setY($this->breakPageHeaderHeight);
+				$this->tcpdf->setY(35);
+			}else{
+				$this->tcpdf->setY($this->breakPageHeaderHeight);
+			}
 			return $isPageBreaked ;
 		}else{
 			return false;
