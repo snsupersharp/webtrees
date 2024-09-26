@@ -7,6 +7,13 @@
 [![StyleCI](https://github.styleci.io/repos/11836349/shield?branch=main)](https://github.styleci.io/repos/11836349?branch=main)
 # webtrees - online collaborative genealogy
 
+## 中式传统后代图谱
+## 假如你想要这样的中式传统后代图谱，可以试试这个
+## 目前只支持显示向下9代，A3上排布已经比较满了，其它报告只是增加了中文内容显示支持，为了尊重原版作者，版本显示没有去掉
+
+![readmepic1](https://github.com/user-attachments/assets/fb8d0167-eddb-420e-ae52-312304f2dc34)
+![readmepic2](https://github.com/user-attachments/assets/41029da8-4308-4702-8e00-ff45b1a916aa)
+
 ## Contents
 
 * [License](#license)
